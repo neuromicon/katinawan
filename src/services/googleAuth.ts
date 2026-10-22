@@ -11,13 +11,10 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   User,
-  signOut
+  signOut,
+  Auth
 } from 'firebase/auth';
 import firebaseConfig from '../../firebase-applet-config.json';
-
-// Initialize Firebase App singleton
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 
 export const SCOPES = [
   'https://www.googleapis.com/auth/drive',
@@ -35,8 +32,22 @@ export const SCOPES = [
   'https://www.googleapis.com/auth/drive.scripts'
 ];
 
-const provider = new GoogleAuthProvider();
-SCOPES.forEach((scope) => provider.addScope(scope));
+// Initialize Firebase App safely with try-catch so it never crashes public site on GitHub Pages
+let authInstance: Auth | null = null;
+let provider: GoogleAuthProvider | null = null;
+
+try {
+  if (firebaseConfig && firebaseConfig.apiKey) {
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    authInstance = getAuth(app);
+    provider = new GoogleAuthProvider();
+    SCOPES.forEach((scope) => provider?.addScope(scope));
+  }
+} catch (err) {
+  console.warn('Firebase Auth initialization deferred or unsupported in this domain:', err);
+}
+
+export const auth = authInstance;
 
 // In-memory token cache (NEVER stored in localStorage per security rule)
 let cachedAccessToken: string | null = null;
@@ -46,24 +57,39 @@ export const initAuth = (
   onAuthSuccess?: (user: User, token: string) => void,
   onAuthFailure?: () => void
 ) => {
-  return onAuthStateChanged(auth, async (user: User | null) => {
-    if (user) {
-      if (cachedAccessToken) {
-        if (onAuthSuccess) onAuthSuccess(user, cachedAccessToken);
-      } else if (!isSigningIn) {
+  if (!authInstance) {
+    if (onAuthFailure) onAuthFailure();
+    return () => {};
+  }
+
+  try {
+    return onAuthStateChanged(authInstance, async (user: User | null) => {
+      if (user) {
+        if (cachedAccessToken) {
+          if (onAuthSuccess) onAuthSuccess(user, cachedAccessToken);
+        } else if (!isSigningIn) {
+          if (onAuthFailure) onAuthFailure();
+        }
+      } else {
+        cachedAccessToken = null;
         if (onAuthFailure) onAuthFailure();
       }
-    } else {
-      cachedAccessToken = null;
-      if (onAuthFailure) onAuthFailure();
-    }
-  });
+    });
+  } catch (e) {
+    console.warn('Auth state listener error:', e);
+    if (onAuthFailure) onAuthFailure();
+    return () => {};
+  }
 };
 
 export const googleSignIn = async (): Promise<{ user: User; accessToken: string } | null> => {
+  if (!authInstance || !provider) {
+    throw new Error('Google Authentication is not configured for this domain. Please verify Firebase Authorized Domains.');
+  }
+
   try {
     isSigningIn = true;
-    const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(authInstance, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     if (!credential?.accessToken) {
       throw new Error('Failed to obtain Google Drive access token from authentication.');
@@ -84,6 +110,12 @@ export const getAccessToken = async (): Promise<string | null> => {
 };
 
 export const googleLogout = async () => {
-  await signOut(auth);
+  if (authInstance) {
+    try {
+      await signOut(authInstance);
+    } catch (e) {
+      console.warn('Sign out error:', e);
+    }
+  }
   cachedAccessToken = null;
 };

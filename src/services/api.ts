@@ -77,10 +77,11 @@ export function initLocalStorage(): void {
 export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
   initLocalStorage();
   const settings = getStorage<SystemSettings>(STORAGE_KEYS.SETTINGS, INITIAL_SETTINGS);
+  const scriptUrl = settings.APPS_SCRIPT_URL || INITIAL_SETTINGS.APPS_SCRIPT_URL;
   
-  if (settings.APPS_SCRIPT_URL) {
+  if (scriptUrl) {
     try {
-      const res = await fetch(`${settings.APPS_SCRIPT_URL}?action=getPublishedEvents`);
+      const res = await fetch(`${scriptUrl}?action=getPublishedEvents`);
       const json = await res.json();
       if (json.status === 'success' && Array.isArray(json.data)) {
         return json.data;
@@ -127,10 +128,11 @@ export async function submitApplication(input: ApplicationFormInput): Promise<{
 }> {
   initLocalStorage();
   const settings = getStorage<SystemSettings>(STORAGE_KEYS.SETTINGS, INITIAL_SETTINGS);
+  const scriptUrl = settings.APPS_SCRIPT_URL || INITIAL_SETTINGS.APPS_SCRIPT_URL;
 
-  if (settings.APPS_SCRIPT_URL) {
+  if (scriptUrl) {
     try {
-      const res = await fetch(settings.APPS_SCRIPT_URL, {
+      const res = await fetch(scriptUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'submitApplication', ...input })

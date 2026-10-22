@@ -14,9 +14,9 @@ export const INITIAL_SETTINGS: SystemSettings = {
   DEFAULT_TIMEZONE: 'Asia/Manila (GMT+8)',
   DEFAULT_CURRENCY: 'PHP',
   LOCATION_POLICY: 'Private Sanctuary in Visayas, Philippines (exact directions provided upon confirmed booking)',
-  APPS_SCRIPT_URL: '',
-  GOOGLE_FORM_URL: 'https://docs.google.com/forms/d/e/1FAIpQLSc-placeholder/viewform',
-  GOOGLE_SHEET_URL: 'https://docs.google.com/spreadsheets/d/placeholder'
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwzY-NMBbpaKxX8XYtPRDiRnvc7EW_yRQEaYLzj3mOa8eOclhpVX-Z98K2SJ5mwxQeaMQ/exec',
+  GOOGLE_FORM_URL: '',
+  GOOGLE_SHEET_URL: ''
 };
 
 export const FAQ_ITEMS = [

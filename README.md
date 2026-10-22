@@ -1,70 +1,80 @@
 # Sacred Plant Spirit Healing (Katin-awan)
 
-> Публичный сайт и система регистрации на церемониальные встречи Велада (*Velada*) на Филиппинах.
+> Public website and registration portal for Velada nocturnal vigils and sacred plant ceremonies in the Philippines.
 
-🌐 **Сайт на GitHub Pages:** [https://neuromicon.github.io/katinawan/](https://neuromicon.github.io/katinawan/)  
-📁 **Репозиторий:** [https://github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan)
+🌐 **Live Website (GitHub Pages):** [https://neuromicon.github.io/katinawan/](https://neuromicon.github.io/katinawan/)  
+📁 **GitHub Repository:** [https://github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan)  
+⚡ **Google Apps Script Endpoint:** `https://script.google.com/macros/s/AKfycbwzY-NMBbpaKxX8XYtPRDiRnvc7EW_yRQEaYLzj3mOa8eOclhpVX-Z98K2SJ5mwxQeaMQ/exec`
 
 ---
 
-## 🏛️ Архитектура проекта
+## 🏛️ System Architecture
 
-Сайт работает по надёжной статической схеме без выделенного веб-сервера:
+The project runs on a serverless, static architecture with strict privacy and manual organizer verification:
 
 ```
-[GitHub Repository] ──(сборка)──> [GitHub Pages]
+[GitHub Repository] ──(build)──> [GitHub Pages]
                                       │
-                               (подача заявки)
+                              (submit application)
                                       ▼
                                 [Google Forms]
                                       │
-                                (запись ответов)
+                              (record responses)
                                       ▼
                                 [Google Sheets]
-                         (доступ только организаторам)
+                         (restricted organizer access)
 ```
 
-| Компонент | Назначение |
+| Component | Responsibility |
 | :--- | :--- |
-| **GitHub Pages** | Публичный статический сайт (HTML, CSS, React, ассеты). Высокая скорость, SSL, нулевые затраты на хостинг. |
-| **Google Forms** | Первичная анкета участника: контактные данные, предпочтительные даты, намерения, предварительный скрининг здоровья и безопасности, экстренный контакт. |
-| **Google Sheets** | Приватная таблица ответов и операционный трекер организатора: ручное рассмотрение, статус заявки, инструкции по депозиту, подтверждение бронирования. |
+| **GitHub Pages** | High-performance static web interface (React, TypeScript, Tailwind CSS, assets). Zero hosting cost, automated SSL, global CDN. |
+| **Google Forms** | Primary participant application: contact details, date selection, intentions, safety & health screening, emergency contacts. |
+| **Google Sheets** | Private response database and administrative tracker: manual review, deposit verification, booking confirmation. |
+| **Google Apps Script** | Secure Web App bridge connecting the public application interface with private Google Sheets and Gmail notifications. |
 
 ---
 
-## 🌿 Основные разделы сайта
+## 🌿 Core Sections
 
-1. **The Ceremony (О церемонии):** Традиция ночного бдения Велада (*Velada*), шаманское наследие Филиппин (*Babaylan/Katalonan*), понятие *katin-awan* (себуанск. *ясность, очищение*) и обязательные уведомления о безопасности и отсутствии медицинских гарантий.
-2. **Gathering Calendar (Календарь):** Отображение статуса набора на подтверждённые даты. При отсутствии опубликованных дат доступна подача заявки с открытой/гибкой датой (*Flexible Dates*).
-3. **Application & Registration (Регистрация):** Подача заявки через форму на сайте или по прямой ссылке на Google Forms.
-4. **Preparation Guide (La Dieta):** Пошаговые правила диеты (с понедельника: исключение алкоголя, ПАВ, токсичного медиаконтента; за 2 дня: исключение мяса и воздержание), интерактивный чек-лист вещей и поминутное расписание уикенда.
-5. **FAQ & Contacts:** Ответы на 14 частых вопросов и официальные контакты организатора (`katinawanph@gmail.com`, Facebook Messenger).
-6. **Панель организатора:** Приватная консоль для администраторов (PIN: `1234` или `katinawan`) с интеграцией Google Drive для резервного копирования трекера и файлов спецификаций.
+1. **The Ceremony (Velada):** Traditional Mazatecan nocturnal vigil with powdered mushroom and ceremonial cacao, Philippine shamanic heritage (*Babaylan / Katalonan*), the meaning of *katin-awan* (Cebuano for *clarity and enlightenment*), and mandatory non-medical safety disclosures.
+2. **Gathering Calendar:** Live status indicators for confirmed gathering dates. When dates are unconfirmed or pending, visitors can apply with flexible dates.
+3. **Application & Intentions:** Application form with input validation, reference ID generation (`KTW-YYYYMMDD-XXXX`), consent verification, and clear deposit notices.
+4. **Preparation Guide (La Dieta):** Phased dietary guidelines (avoiding alcohol, recreational drugs, and toxic media starting Monday; avoiding meat and sexual activity 2 days prior), interactive packing checklist, and weekend timetable.
+5. **FAQ & Direct Contacts:** 14 categorized questions and verified contact channels (`katinawanph@gmail.com`, Facebook Messenger).
+6. **Organizer Console:** Private administrative interface (PIN: `1234` or `katinawan`) with Google Drive backup, Google Sheets synchronization, and audit logging.
 
 ---
 
-## 🛠️ Разработка и сборка
+## 🛠️ Local Development & Build
 
 ```bash
-# Установка зависимостей
+# Install dependencies
 npm install
 
-# Запуск локального сервера разработки (порт 3000)
+# Start local development server (port 3000)
 npm run dev
 
-# Проверка типов
+# Run TypeScript type check
 npm run lint
 
-# Сборка для GitHub Pages (в каталог dist)
+# Build production bundle for GitHub Pages
 npm run build
 ```
 
 ---
 
-## 🚀 Публикация на GitHub Pages
+## 🚀 Publishing to GitHub Pages
 
-В репозитории [github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan):
-1. Перейдите в **Settings** → **Pages**.
-2. В разделе **Build and deployment**:
-   - **Source**: выберите **Deploy from a branch** (ветка `gh-pages` или ветка `main` / папка `/docs`), либо **GitHub Actions**.
-3. Сайт доступен по адресу: **`https://neuromicon.github.io/katinawan/`**
+1. Open repository settings at **[github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan)**.
+2. Go to **Settings** → **Pages**.
+3. Under **Build and deployment**:
+   - **Source**: Select **Deploy from a branch**
+   - **Branch**: Select **`main`**, and select the folder **`/docs`** (or branch **`gh-pages`** / root)
+   - Click **Save**.
+4. The website will be live at: **[https://neuromicon.github.io/katinawan/](https://neuromicon.github.io/katinawan/)**
+
+---
+
+## 📄 License & Copyright
+
+Copyright © 2026 Sacred Plant Spirit Healing (Katin-awan). All rights reserved.
