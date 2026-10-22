@@ -37,6 +37,8 @@ export default function App() {
         if (firstAvailable) {
           setSelectedEventId(firstAvailable.event_id);
         }
+      } else if (data.length === 0) {
+        setSelectedEventId('flexible');
       }
     } catch (err) {
       console.error('Failed to load events:', err);

@@ -98,20 +98,37 @@ export const UpcomingSection: React.FC<UpcomingSectionProps> = ({
           </div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State per Specification */}
         {!isLoading && events.length === 0 && (
-          <div className="bg-[#F4F0E6] p-10 rounded-xl border border-[#B8C7AE]/40 text-center max-w-xl mx-auto my-8">
-            <Calendar className="w-8 h-8 text-[#7a8c6f] mx-auto mb-3" />
-            <h3 className="font-serif text-xl text-[#142A21] mb-2">No Published Ceremonies Currently</h3>
-            <p className="text-xs sm:text-sm text-[#142A21]/70 leading-relaxed mb-4">
-              Gatherings are organized in alignment with natural cycles and facilitator availability. Check back soon or reach out via email to be notified of new dates.
+          <div className="bg-white p-8 sm:p-12 rounded-2xl border border-[#B8C7AE]/40 text-center max-w-2xl mx-auto my-8 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-[#142A21] text-[#C4A46A] flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-6 h-6" />
+            </div>
+            <h3 className="font-serif text-2xl text-[#142A21] mb-2 font-normal">
+              No Upcoming Ceremonies Currently Published
+            </h3>
+            <p className="text-xs sm:text-sm text-[#142A21]/75 leading-relaxed max-w-lg mx-auto mb-6">
+              In accordance with our ceremonial practice, confirmed dates, venue locations, and container capacities are announced in alignment with facilitator readiness and natural cycles.
             </p>
-            <a
-              href="#contact"
-              className="inline-block text-xs font-semibold text-[#142A21] uppercase tracking-wider underline hover:text-[#C4A46A]"
-            >
-              Contact Organizer
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={() => {
+                  onSelectEvent('flexible');
+                  const el = document.getElementById('apply');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm flex items-center justify-center gap-2"
+              >
+                <span>Apply with Flexible Dates</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#C4A46A]" />
+              </button>
+              <a
+                href="#contact"
+                className="w-full sm:w-auto px-6 py-3 rounded-lg border border-[#7a8c6f] hover:border-[#142A21] text-[#142A21] text-xs font-semibold uppercase tracking-wider transition-colors"
+              >
+                Contact Organizer
+              </a>
+            </div>
           </div>
         )}
 

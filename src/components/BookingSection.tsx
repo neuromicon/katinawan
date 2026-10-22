@@ -221,16 +221,23 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
             {/* Event Selection */}
             <div>
-              <label className="block text-xs uppercase tracking-wider font-semibold text-[#C4A46A] mb-2">
-                Selected Ceremony Date *
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs uppercase tracking-wider font-semibold text-[#C4A46A]">
+                  Preferred Ceremony Date *
+                </label>
+                <span className="text-[11px] text-[#B8C7AE]/80">
+                  Confirmed dates or flexible queue
+                </span>
+              </div>
               <select
-                value={selectedEventId}
+                value={selectedEventId || 'flexible'}
                 onChange={(e) => onSelectEvent(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-[#142A21] border border-[#B8C7AE]/30 text-[#F4F0E6] text-sm focus:border-[#C4A46A] focus:outline-none focus:ring-1 focus:ring-[#C4A46A]"
                 required
               >
-                <option value="">-- Choose an upcoming ceremony --</option>
+                <option value="flexible">
+                  🌿 I am flexible — please contact me about upcoming available dates
+                </option>
                 {activeEvents.map((evt) => (
                   <option key={evt.event_id} value={evt.event_id}>
                     {evt.title} ({new Date(evt.starts_at).toLocaleDateString()}) - [{evt.status}]

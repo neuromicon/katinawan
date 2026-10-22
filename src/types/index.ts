@@ -94,6 +94,8 @@ export interface SystemSettings {
   DEFAULT_CURRENCY: string;
   LOCATION_POLICY: string;
   APPS_SCRIPT_URL?: string;
+  GOOGLE_FORM_URL?: string;
+  GOOGLE_SHEET_URL?: string;
 }
 
 export interface AuditLogEntry {

@@ -1,133 +1,22 @@
 import { CeremonyEvent, Application, SystemSettings } from '../types';
 
-export const INITIAL_EVENTS: CeremonyEvent[] = [
-  {
-    event_id: 'KTW-EVT-2026-11-06',
-    title: 'Velada Night Vigil & Plant Spirit Awakening',
-    slug: 'velada-nov-2026',
-    description: 'An intimate 2-day ceremonial gathering guided by traditional Mazatecan sacred practice with powdered mushroom and ceremonial cacao, held in our secluded sanctuary.',
-    starts_at: '2026-11-06T15:00:00+08:00',
-    ends_at: '2026-11-08T12:00:00+08:00',
-    timezone: 'Asia/Manila (GMT+8)',
-    capacity: 10,
-    occupied_count: 7,
-    remaining_capacity: 3,
-    registration_deadline: '2026-11-01T23:59:59+08:00',
-    status: 'ALMOST_FULL',
-    location_label: 'Sanctuary in Visayas (Disclosed upon confirmation)',
-    location_visibility: 'PRIVATE',
-    deposit_amount: 'Configured on review',
-    deposit_currency: 'PHP',
-    deposit_deadline_hours: 48,
-    created_at: '2026-10-15T00:00:00Z',
-    updated_at: '2026-10-22T00:00:00Z'
-  },
-  {
-    event_id: 'KTW-EVT-2026-11-20',
-    title: 'Katin-awan: Clarity & Ancestral Harmonic Gathering',
-    slug: 'katin-awan-nov-2026',
-    description: 'A weekend vigil honoring inner clarity (katin-awan). Incorporates Rapé & Sanangga blessing, full-dose Velada vigil, and restorative morning sharing.',
-    starts_at: '2026-11-20T15:00:00+08:00',
-    ends_at: '2026-11-22T12:00:00+08:00',
-    timezone: 'Asia/Manila (GMT+8)',
-    capacity: 12,
-    occupied_count: 5,
-    remaining_capacity: 7,
-    registration_deadline: '2026-11-15T23:59:59+08:00',
-    status: 'AVAILABLE',
-    location_label: 'Sanctuary in Visayas (Disclosed upon confirmation)',
-    location_visibility: 'PRIVATE',
-    deposit_amount: 'Configured on review',
-    deposit_currency: 'PHP',
-    deposit_deadline_hours: 48,
-    created_at: '2026-10-18T00:00:00Z',
-    updated_at: '2026-10-22T00:00:00Z'
-  },
-  {
-    event_id: 'KTW-EVT-2026-12-04',
-    title: 'Solstice Renewal Velada Ceremony',
-    slug: 'solstice-velada-dec-2026',
-    description: 'Year-end spiritual vigil dedicated to deep contemplation, releasing stagnant energy, and connecting to the loving wisdom of sacred plant teachers.',
-    starts_at: '2026-12-04T15:00:00+08:00',
-    ends_at: '2026-12-06T12:00:00+08:00',
-    timezone: 'Asia/Manila (GMT+8)',
-    capacity: 10,
-    occupied_count: 10,
-    remaining_capacity: 0,
-    registration_deadline: '2026-11-28T23:59:59+08:00',
-    status: 'WAITLIST',
-    location_label: 'Sanctuary in Visayas (Disclosed upon confirmation)',
-    location_visibility: 'PRIVATE',
-    deposit_amount: 'Configured on review',
-    deposit_currency: 'PHP',
-    deposit_deadline_hours: 48,
-    created_at: '2026-10-19T00:00:00Z',
-    updated_at: '2026-10-22T00:00:00Z'
-  }
-];
+// All event dates, capacities, and applications remain unconfirmed until provided by the organizer.
+// Per specification: "Do not publish invented values. Empty state until organizer publishes confirmed dates."
+export const INITIAL_EVENTS: CeremonyEvent[] = [];
 
-export const INITIAL_APPLICATIONS: Application[] = [
-  {
-    application_id: 'KTW-20261020-1092',
-    event_id: 'KTW-EVT-2026-11-06',
-    event_title: 'Velada Night Vigil & Plant Spirit Awakening',
-    full_name: 'Elena Rostova',
-    email: 'elena.rostova@example.com',
-    attendee_count: 1,
-    message: 'Seeking clarification and grounded spiritual guidance after a long period of burnout.',
-    preferred_contact: 'email',
-    status: 'PENDING_REVIEW',
-    privacy_consent_at: '2026-10-20T10:14:00Z',
-    created_at: '2026-10-20T10:14:00Z',
-    updated_at: '2026-10-20T10:14:00Z',
-    status_updated_by: 'system',
-    status_updated_at: '2026-10-20T10:14:00Z'
-  },
-  {
-    application_id: 'KTW-20261021-3481',
-    event_id: 'KTW-EVT-2026-11-06',
-    event_title: 'Velada Night Vigil & Plant Spirit Awakening',
-    full_name: 'Markus Lindholm',
-    email: 'm.lindholm@example.org',
-    attendee_count: 2,
-    message: 'Attending with my partner. We have both practiced meditation for 8 years.',
-    preferred_contact: 'email',
-    status: 'AWAITING_DEPOSIT',
-    privacy_consent_at: '2026-10-21T08:30:00Z',
-    created_at: '2026-10-21T08:30:00Z',
-    updated_at: '2026-10-21T14:20:00Z',
-    status_updated_by: 'admin@katinawan.ph',
-    status_updated_at: '2026-10-21T14:20:00Z'
-  },
-  {
-    application_id: 'KTW-20261021-9812',
-    event_id: 'KTW-EVT-2026-11-20',
-    event_title: 'Katin-awan: Clarity & Ancestral Harmonic Gathering',
-    full_name: 'Gabriel Morales',
-    email: 'gabriel.m@example.ph',
-    attendee_count: 1,
-    message: 'Deeply drawn to the Cebuano roots and traditional Mazatecan Velada blend.',
-    preferred_contact: 'messenger',
-    status: 'CONFIRMED',
-    privacy_consent_at: '2026-10-21T09:00:00Z',
-    created_at: '2026-10-21T09:00:00Z',
-    updated_at: '2026-10-22T06:15:00Z',
-    status_updated_by: 'admin@katinawan.ph',
-    status_updated_at: '2026-10-22T06:15:00Z',
-    deposit_reported_reference: 'BPI-TRX-94819284',
-    deposit_verified_at: '2026-10-22T06:15:00Z'
-  }
-];
+export const INITIAL_APPLICATIONS: Application[] = [];
 
 export const INITIAL_SETTINGS: SystemSettings = {
-  ORGANIZER_NAME: 'Katin-awan — Sacred Plant Spirit Healing',
+  ORGANIZER_NAME: 'Sacred Plant Spirit Healing (Katin-awan)',
   CONTACT_EMAIL: 'katinawanph@gmail.com',
   FACEBOOK_PAGE_URL: 'https://facebook.com/katinawanph',
   MESSENGER_URL: 'https://m.me/katinawanph',
   DEFAULT_TIMEZONE: 'Asia/Manila (GMT+8)',
   DEFAULT_CURRENCY: 'PHP',
-  LOCATION_POLICY: 'Private Sanctuary in Visayas, Philippines (exact directions provided upon verified booking)',
-  APPS_SCRIPT_URL: ''
+  LOCATION_POLICY: 'Private Sanctuary in Visayas, Philippines (exact directions provided upon confirmed booking)',
+  APPS_SCRIPT_URL: '',
+  GOOGLE_FORM_URL: 'https://docs.google.com/forms/d/e/1FAIpQLSc-placeholder/viewform',
+  GOOGLE_SHEET_URL: 'https://docs.google.com/spreadsheets/d/placeholder'
 };
 
 export const FAQ_ITEMS = [

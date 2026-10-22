@@ -53,8 +53,15 @@ function logAudit(action: string, entityType: string, entityId: string, result: 
   setStorage(STORAGE_KEYS.AUDIT, logs.slice(0, 100));
 }
 
-// Initialize default data if empty
+// Initialize default data if empty or clean old demo data
 export function initLocalStorage(): void {
+  // If storage previously contained fake demo records, purge them
+  const storedApps = getStorage<Application[]>(STORAGE_KEYS.APPLICATIONS, []);
+  if (storedApps.some(a => a.full_name === 'Elena Rostova' || a.email?.includes('example.com'))) {
+    localStorage.removeItem(STORAGE_KEYS.APPLICATIONS);
+    localStorage.removeItem(STORAGE_KEYS.EVENTS);
+  }
+
   if (!localStorage.getItem(STORAGE_KEYS.EVENTS)) {
     setStorage(STORAGE_KEYS.EVENTS, INITIAL_EVENTS);
   }
@@ -142,17 +149,18 @@ export async function submitApplication(input: ApplicationFormInput): Promise<{
   const applications = getStorage<Application[]>(STORAGE_KEYS.APPLICATIONS, INITIAL_APPLICATIONS);
 
   const event = events.find(e => e.event_id === input.event_id);
-  if (!event) {
-    throw new Error('The selected event was not found.');
+  const eventTitle = event ? event.title : 'Flexible Gathering Dates (To be coordinated with Facilitator)';
+
+  let remaining = 10;
+  if (event) {
+    const occupied = applications
+      .filter(app => app.event_id === input.event_id &&
+        ['CONFIRMED', 'DEPOSIT_VERIFIED', 'AWAITING_DEPOSIT', 'DEPOSIT_REPORTED'].includes(app.status))
+      .reduce((sum, app) => sum + (app.attendee_count || 1), 0);
+    remaining = Math.max(0, event.capacity - occupied);
   }
 
-  const occupied = applications
-    .filter(app => app.event_id === input.event_id &&
-      ['CONFIRMED', 'DEPOSIT_VERIFIED', 'AWAITING_DEPOSIT', 'DEPOSIT_REPORTED'].includes(app.status))
-    .reduce((sum, app) => sum + (app.attendee_count || 1), 0);
-
-  const remaining = Math.max(0, event.capacity - occupied);
-  const isWaitlist = remaining < input.attendee_count;
+  const isWaitlist = event ? remaining < input.attendee_count : false;
   const initialStatus: ApplicationStatus = isWaitlist ? 'WAITLISTED' : 'PENDING_REVIEW';
 
   const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -161,8 +169,8 @@ export async function submitApplication(input: ApplicationFormInput): Promise<{
 
   const newApp: Application = {
     application_id: applicationId,
-    event_id: input.event_id,
-    event_title: event.title,
+    event_id: input.event_id || 'flexible',
+    event_title: eventTitle,
     full_name: input.full_name.trim(),
     email: input.email.trim().toLowerCase(),
     attendee_count: Number(input.attendee_count) || 1,

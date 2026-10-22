@@ -1,0 +1,755 @@
+# SACRED PLANT SPIRIT HEALING
+## Technical Specification — Version 1.1
+
+**Project type:** Public website and event booking service  
+**Interface language:** English  
+**Hosting:** GitHub Pages  
+**Backend:** Google Apps Script Web App  
+**Database:** Google Sheets  
+**Email:** Gmail / Google Apps Script MailApp  
+**Administration:** Private web dashboard  
+**Booking model:** Application → Manual Review → Approval → Deposit → Final Confirmation  
+**Payments:** Deposit workflow; payment method and amount to be configured  
+**Event capacity:** Limited, with waitlist support  
+**Location:** To be confirmed by the organizer  
+**Contact channels:** Email and Facebook Messenger
+
+---
+
+## 1. Project Objectives
+
+Create an elegant, responsive English-language website for Sacred Plant Spirit Healing that allows visitors to:
+
+1. Understand the ceremony and the organizer's approach.
+2. Review preparation instructions and frequently asked questions.
+3. Browse upcoming events and available dates.
+4. Submit an application for a selected event.
+5. Receive an application reference and status updates.
+6. Receive deposit instructions after the organizer approves the application.
+7. Contact the organizer through email or Facebook Messenger.
+
+The organizer must be able to manage events, capacities, applications, deposits and booking statuses through a web-based administration interface without editing source code.
+
+The website must not invent event dates, prices, locations, medical claims or legal permissions.
+
+## 2. Technical Architecture
+
+### 2.1. Frontend
+
+**Technology:** HTML5, CSS3 and JavaScript, with React and TypeScript permitted if appropriate.
+
+The frontend is deployed to GitHub Pages. It must support repository-based URLs and a custom domain if one is configured later.
+
+Responsibilities:
+
+- Render public pages and event listings.
+- Validate application forms before submission.
+- Display available dates and capacity status.
+- Submit applications to the backend.
+- Display application references and user-friendly error messages.
+- Provide booking status instructions.
+- Display the privacy policy and consent controls.
+
+No privileged credentials may be embedded in frontend code.
+
+### 2.2. Backend
+
+**Google Apps Script Web App** provides the server-side application logic.
+
+Responsibilities:
+
+- Return published event data.
+- Validate and process applications.
+- Enforce capacity restrictions.
+- Generate unique application references.
+- Manage application statuses.
+- Send email notifications.
+- Process deposit-related status changes.
+- Authorize administrative operations.
+- Record administrative changes.
+
+All sensitive operations must execute server-side.
+
+### 2.3. Database
+
+Google Sheets stores the application's structured data.
+
+The spreadsheet must not be publicly accessible. Access is restricted to authorized administrators and the Apps Script execution identity.
+
+Google Sheets is acceptable for an initial, relatively low-volume implementation. It does not provide the same transactional guarantees as a relational database. Therefore, all capacity-sensitive operations must use server-side locking and carefully controlled read/write sequences.
+
+### 2.4. Email
+
+Use Gmail through Google Apps Script, subject to account quotas and configuration.
+
+Email delivery failure must not delete or invalidate a successfully stored application. Failed notifications must be recorded for retry.
+
+### 2.5. Architecture Diagram
+
+    Visitor
+       |
+       v
+    GitHub Pages
+       |
+       v
+    Google Apps Script Web App
+       |
+       +---- Google Sheets
+       |       +---- Events
+       |       +---- Applications
+       |       +---- Payment Records
+       |       +---- Admin Audit Log
+       |
+       +---- Email Notifications
+       |
+       +---- Admin Operations
+
+## 3. Public Website Structure
+
+### 3.1. Home
+
+Sections:
+
+- Header and navigation.
+- Hero image and introductory statement.
+- Short introduction to Sacred Plant Spirit Healing.
+- Overview of the ceremony.
+- Upcoming events.
+- Preparation overview.
+- Frequently asked questions.
+- Contact information.
+- Footer with legal and privacy links.
+
+Primary CTA: **Explore Upcoming Ceremonies**
+
+Secondary CTA: **Learn About Velada**
+
+Suggested introductory copy:
+
+“A space for reflection, connection and discovery. Learn about the ceremonial experience, explore upcoming gatherings and contact the organizer to discuss participation.”
+
+This copy describes the experience without promising a specific outcome.
+
+### 3.2. The Ceremony
+
+Include:
+
+- What Is Velada?
+- The Ceremonial Approach
+- What to Expect
+- Event Duration and Schedule
+- Preparation
+- Participation Requirements
+- Contact the Organizer
+
+Distinguish the organizer's spiritual beliefs from verifiable factual and medical claims.
+
+### 3.3. Upcoming Ceremonies
+
+Display event cards with:
+
+- Event title.
+- Start and end date.
+- Local start and end times.
+- Confirmed location or a clear indication that location details will be provided privately.
+- Event description.
+- Registration status.
+- Remaining places, when accurate.
+- Application deadline, if configured.
+- Apply button.
+
+Possible statuses:
+
+- Available
+- Almost Full
+- Full
+- Waitlist
+- Closed
+- Cancelled
+
+Only published future events may appear in the public calendar.
+
+No sample dates may be presented as actual events.
+
+### 3.4. Preparation Guide
+
+Include the organizer's approved instructions, what participants should bring, the event schedule and contact details.
+
+Preparation information must be reviewed and approved by the organizer before publication. Instructions must not imply that dietary practices or substance avoidance guarantee safety.
+
+### 3.5. FAQ
+
+Provide expandable answers to:
+
+- What is Velada?
+- What happens during the ceremony?
+- How long does it last?
+- How should I prepare?
+- What should I bring?
+- Is prior experience required?
+- How do I apply?
+- When is my booking confirmed?
+- How does the deposit work?
+- What happens if an event is full?
+- How do I cancel?
+- Where does the ceremony take place?
+- How can I contact the organizer?
+
+Medical, legal and eligibility answers require review before publication.
+
+### 3.6. Contact
+
+Provide:
+
+- Organizer's confirmed email address.
+- Link to the official Facebook page.
+- Facebook Messenger contact link, once verified.
+- Confirmed location information.
+- Privacy Policy.
+- Booking and cancellation information.
+
+Do not publish a physical address until the organizer confirms that it is accurate and appropriate for public display.
+
+## 4. Booking Workflow
+
+The system must distinguish an application from a confirmed reservation.
+
+### Stage 1 — Application
+
+The visitor selects an available event and submits the application form.
+
+The server validates the request and creates an application with status `PENDING_REVIEW`.
+
+The application receives a unique reference, for example `SPH-XXXXXXXX`. The actual reference must be generated by the backend.
+
+### Stage 2 — Manual Review
+
+The organizer reviews the application in the administration dashboard.
+
+Available actions:
+
+- Approve.
+- Decline.
+- Add to waitlist.
+- Request additional information.
+- Cancel an application.
+
+An approved application transitions to `AWAITING_DEPOSIT` if a deposit is required.
+
+### Stage 3 — Deposit Instructions
+
+After approval, the system sends deposit instructions through email.
+
+The amount, currency, payment method, payment deadline and recipient details must come from organizer-configured settings.
+
+No amount or payment details may be hardcoded as factual project data before they are provided.
+
+### Stage 4 — Deposit Verification
+
+For the first release, payment verification is manual.
+
+The organizer checks the payment through the agreed payment channel and records the result in the dashboard.
+
+A visitor's uploaded receipt or payment claim is not sufficient to mark a deposit as verified.
+
+### Stage 5 — Booking Confirmation
+
+After the deposit is verified, the organizer can confirm the booking.
+
+The system changes the status to `CONFIRMED` and sends a confirmation email containing the event date, time, location instructions and preparation guide.
+
+### Stage 6 — Waitlist
+
+When an event is full, new applicants may join the waitlist if the organizer enables it.
+
+A waitlisted application does not reserve a place. When capacity becomes available, the organizer may offer the place to an applicant.
+
+### Booking Statuses
+
+- `PENDING_REVIEW`
+- `AWAITING_DEPOSIT`
+- `DEPOSIT_REPORTED`
+- `DEPOSIT_VERIFIED`
+- `CONFIRMED`
+- `WAITLISTED`
+- `DECLINED`
+- `CANCELLED`
+- `EXPIRED`
+
+All status transitions must be validated server-side. Only authorized administrators may verify deposits and confirm bookings.
+
+## 5. Application Form
+
+Required fields:
+
+- Full name.
+- Email address.
+- Selected event.
+- Number of requested places.
+- Privacy consent.
+
+Optional fields:
+
+- Message to the organizer.
+- Preferred contact channel, if needed.
+
+Validation requirements:
+
+- All mandatory fields must be completed.
+- Email format must be validated.
+- Requested places must be a positive integer within the event's configured limit.
+- The event must be published, open for registration and not cancelled.
+- Consent must be explicitly recorded.
+- The same request must not create duplicate applications when a submission is retried.
+
+The application form must not collect detailed medical histories or other sensitive information unnecessarily.
+
+If eligibility screening is required, it must be handled through an appropriately protected process.
+
+## 6. Capacity Management
+
+Each event must have a configurable capacity.
+
+The backend must calculate occupied places using the event's applicable reservation policy.
+
+Recommended initial policy:
+
+- `CONFIRMED` bookings count toward occupied capacity.
+- Pending applications do not automatically count as confirmed places.
+- The organizer may configure a temporary hold on places for approved applicants awaiting deposits.
+- Any temporary hold must have an expiry time.
+- Waitlisted applications do not occupy confirmed capacity.
+
+A server-side lock must protect the critical capacity-check and booking operation.
+
+The system must prevent concurrent requests from confirming more participants than the configured capacity.
+
+For Google Sheets, the implementation must use `LockService` for critical operations and perform the final capacity check inside the locked operation.
+
+If the backend cannot safely complete an operation, it must return a clear error and must not claim that a place has been reserved.
+
+## 7. Google Sheets Data Model
+
+Create a private spreadsheet with the following sheets.
+
+### 7.1. `Events`
+
+Columns:
+
+- `event_id`
+- `title`
+- `slug`
+- `description`
+- `starts_at`
+- `ends_at`
+- `timezone`
+- `capacity`
+- `registration_deadline`
+- `status`
+- `location_label`
+- `location_visibility`
+- `deposit_amount`
+- `deposit_currency`
+- `deposit_deadline_hours`
+- `created_at`
+- `updated_at`
+
+Store timestamps consistently and display them in the configured event timezone.
+
+`deposit_amount` and `deposit_currency` remain unset until the organizer supplies the required values.
+
+### 7.2. `Applications`
+
+Columns:
+
+- `application_id`
+- `event_id`
+- `full_name`
+- `email`
+- `attendee_count`
+- `message`
+- `status`
+- `privacy_consent_at`
+- `created_at`
+- `updated_at`
+- `status_updated_by`
+- `status_updated_at`
+
+### 7.3. `Payments`
+
+Columns:
+
+- `payment_id`
+- `application_id`
+- `payment_type`
+- `expected_amount`
+- `currency`
+- `payment_method`
+- `payment_reference`
+- `reported_at`
+- `verified_at`
+- `verified_by`
+- `status`
+- `admin_notes`
+
+Do not store full card numbers, security codes, banking credentials or other unnecessary financial data.
+
+### 7.4. `AdminUsers`
+
+Columns:
+
+- `admin_email`
+- `role`
+- `active`
+- `created_at`
+
+Access must be enforced by the server, not by hiding dashboard elements.
+
+### 7.5. `Settings`
+
+Store configurable operational settings:
+
+- Organizer display name.
+- Notification recipient.
+- Contact email.
+- Facebook page URL.
+- Messenger URL.
+- Default event timezone.
+- Default currency.
+- Deposit policy.
+- Cancellation policy.
+- Privacy policy URL.
+
+All settings must be reviewed before production launch.
+
+### 7.6. `AuditLog`
+
+Columns:
+
+- `log_id`
+- `timestamp`
+- `admin_email`
+- `action`
+- `entity_type`
+- `entity_id`
+- `result`
+
+Record security-relevant administrative actions without duplicating unnecessary personal data.
+
+## 8. Administration Dashboard
+
+The dashboard must be accessible through a web interface.
+
+### 8.1. Authentication
+
+Use Google identity and a server-side allowlist of authorized administrator email addresses.
+
+Requirements:
+
+- Only explicitly authorized accounts may access administrative functions.
+- Each administrative request must be authorized server-side.
+- An email address supplied by the browser must never be treated as proof of identity.
+- If Google Apps Script cannot reliably verify the caller's identity under the chosen deployment configuration, use a separately authenticated administrative interface or a supported Google identity integration.
+- Do not rely on a shared secret embedded in frontend JavaScript.
+
+### 8.2. Dashboard Overview
+
+Display:
+
+- Upcoming events.
+- Available places.
+- Pending applications.
+- Applications awaiting deposits.
+- Deposits awaiting verification.
+- Confirmed bookings.
+- Waitlist count.
+- Cancelled events.
+
+### 8.3. Event Management
+
+Authorized administrators can:
+
+- Create an event.
+- Edit event details.
+- Publish or unpublish an event.
+- Configure capacity.
+- Set the registration deadline.
+- Configure deposit requirements.
+- Update location visibility.
+- Cancel an event.
+
+Changes must be validated and logged.
+
+### 8.4. Application Management
+
+Authorized administrators can:
+
+- Search by application reference.
+- Filter by event and status.
+- View applicant details.
+- Approve or decline applications.
+- Add applicants to the waitlist.
+- Record deposit verification.
+- Confirm bookings.
+- Cancel bookings.
+- Resend notifications.
+- Export authorized records to CSV.
+
+CSV export must be restricted to authorized administrators and should not include unnecessary fields.
+
+## 9. Email Notifications
+
+Use branded HTML email with a plain-text alternative.
+
+### Application Received
+
+Subject: `We've received your ceremony application`
+
+Explain that the application was received and is awaiting review. Include the application reference and selected event.
+
+### Application Approved — Deposit Required
+
+Subject: `Next steps for your ceremony application`
+
+Include the event details, configured deposit amount and currency, approved payment instructions and deadline.
+
+### Deposit Received — Verification Pending
+
+Subject: `Your deposit is awaiting verification`
+
+Confirm receipt of the applicant's payment report without falsely claiming that the funds have been verified.
+
+### Booking Confirmed
+
+Subject: `Your ceremony booking is confirmed`
+
+Include the confirmed event date, local time, location instructions, preparation guide and contact details.
+
+### Waitlist
+
+Subject: `Your application is on the waiting list`
+
+Explain that the applicant does not yet have a confirmed place.
+
+### Declined or Cancelled
+
+Provide a neutral explanation and appropriate contact instructions.
+
+Email failure must be logged and recoverable. Sending a message is not proof that the recipient received or read it.
+
+## 10. Deposit Handling
+
+The first release does not implement automated payment processing.
+
+Required functionality:
+
+1. Configure a deposit amount and currency for each event.
+2. Send payment instructions only after application approval.
+3. Record a payment report.
+4. Allow an authorized administrator to verify the deposit.
+5. Record verification time and administrator identity.
+6. Confirm the booking only after the configured conditions are satisfied.
+7. Notify the applicant of the result.
+8. Record cancellations and any refund-related administrative decisions.
+
+The organizer must specify:
+
+- Deposit amount.
+- Currency.
+- Accepted payment method.
+- Payment recipient.
+- Payment deadline.
+- Cancellation and refund policy.
+
+No real payment credentials, prices or payment links may be invented.
+
+If an online payment gateway is introduced later, its integration must use the provider's secure server-side verification mechanism. A browser redirect or uploaded receipt alone must not mark a payment as paid.
+
+## 11. Privacy and Security
+
+Mandatory controls:
+
+- HTTPS.
+- Server-side input validation.
+- Strict administrator authorization.
+- Private Google Sheets access.
+- Rate limiting or equivalent abuse controls.
+- Spam protection.
+- Safe output encoding.
+- Protection against injection and cross-site scripting.
+- No privileged secrets in the public repository.
+- Restricted access to personal information.
+- Retention and deletion rules.
+- Privacy notice and explicit consent.
+- Audit logging for sensitive operations.
+
+The public interface must not expose spreadsheet identifiers or administrative endpoints beyond what is required for the application to function. Any publicly callable endpoint must treat all input as untrusted.
+
+Before launch, verify applicable Philippine data protection requirements and the legal status of the actual activities and substances involved. Do not publish unsupported claims of legal authorization, medical approval or guaranteed safety.
+
+## 12. Visual Design
+
+Visual direction:
+
+- Forest green.
+- Warm ivory.
+- Sage.
+- Muted gold.
+- Botanical photography.
+- Spacious editorial layout.
+- Clear navigation.
+- Accessible contrast.
+- Restrained transitions.
+- Responsive cards and forms.
+
+Suggested typography:
+
+- Headings: Cormorant Garamond.
+- Body: Inter or a system sans-serif.
+
+Design priorities:
+
+- Readability over decoration.
+- Mobile-first booking experience.
+- Clear availability and application status.
+- No autoplay audio.
+- Respect `prefers-reduced-motion`.
+- No visual effects that obstruct important information.
+
+## 13. Performance and Accessibility
+
+Target WCAG 2.2 AA.
+
+Requirements:
+
+- Keyboard-accessible navigation.
+- Visible focus indicators.
+- Correct form labels.
+- Accessible error messages.
+- Adequate color contrast.
+- Responsive images in modern formats.
+- Lazy loading below the fold.
+- Minimal JavaScript.
+- Semantic HTML.
+- Meaningful page titles and metadata.
+- Open Graph metadata for Facebook sharing.
+
+## 14. Repository Structure
+
+    sacred-plant-spirit-healing/
+    ├── public/
+    │   ├── images/
+    │   ├── favicon.svg
+    │   ├── robots.txt
+    │   └── sitemap.xml
+    ├── src/
+    │   ├── components/
+    │   ├── pages/
+    │   ├── sections/
+    │   ├── booking/
+    │   ├── admin/
+    │   ├── services/
+    │   ├── styles/
+    │   └── utils/
+    ├── apps-script/
+    │   ├── Code.gs
+    │   ├── Auth.gs
+    │   ├── Events.gs
+    │   ├── Applications.gs
+    │   ├── Payments.gs
+    │   ├── Notifications.gs
+    │   └── Admin.gs
+    ├── tests/
+    ├── .github/
+    │   └── workflows/
+    ├── .env.example
+    ├── README.md
+    ├── PRIVACY.md
+    └── package.json
+
+The Apps Script source must be deployed separately from GitHub Pages. Deployment instructions must explain how to configure script properties, authorization, spreadsheet access and email settings.
+
+## 15. Deployment
+
+1. Create the GitHub repository.
+2. Implement and test the frontend locally.
+3. Create a private Google spreadsheet.
+4. Configure Google Apps Script and its permissions.
+5. Implement and test the public API.
+6. Configure administrator authorization.
+7. Deploy the Apps Script Web App.
+8. Configure frontend API settings.
+9. Configure email notifications.
+10. Run end-to-end booking tests.
+11. Publish the frontend through GitHub Pages.
+12. Verify HTTPS, access controls and operational logs.
+
+Production credentials must not be committed to Git.
+
+## 16. Acceptance Criteria
+
+The release is accepted only when:
+
+- The website works on desktop and mobile.
+- All public content is in English.
+- Only published future events are displayed.
+- Visitors can select a real configured event.
+- Applications are stored and assigned unique references.
+- Manual approval works correctly.
+- Deposit instructions are sent only when appropriate.
+- Deposits can be recorded and verified.
+- Booking confirmation follows the defined workflow.
+- Event capacity cannot be exceeded through concurrent booking requests.
+- Waitlisting works.
+- Administrators can manage events and applications.
+- Unauthorized users cannot access private data or administrative operations.
+- Email failures do not destroy application records.
+- Privacy and consent controls work.
+- No invented event dates, prices, locations or legal claims are published.
+- The frontend deploys successfully through GitHub Pages.
+- The backend can be maintained without exposing secrets.
+
+## 17. Project Phases
+
+**Phase 1 — Content and visual design**
+
+Confirm the brand assets, copy, contact details, location and approved preparation instructions.
+
+**Phase 2 — Public frontend**
+
+Implement all public pages, responsive layouts, event cards, date selection and application form.
+
+**Phase 3 — Backend and data model**
+
+Implement Apps Script operations, Google Sheets storage, validation, locking and application references.
+
+**Phase 4 — Administration and deposits**
+
+Implement administrator authorization, event management, application review, deposit verification and notifications.
+
+**Phase 5 — Testing and launch**
+
+Perform security, capacity, email, privacy, accessibility and deployment tests.
+
+Estimated implementation effort: approximately 6–14 working days for one developer, assuming timely access to Google accounts and approved content. This is an estimate, not a delivery guarantee.
+
+## 18. Outstanding Organizer Inputs
+
+The following information remains unconfirmed and must be supplied before production:
+
+- Actual event dates and schedules.
+- Event capacity and reservation-hold policy.
+- Deposit amount and currency.
+- Payment method and recipient.
+- Deposit deadline.
+- Cancellation and refund policy.
+- Confirmed location and disclosure policy.
+- Organizer's notification email.
+- Official Facebook page and Messenger URL.
+- Authorized administrator Google accounts.
+- Approved preparation instructions.
+- Final privacy and legal wording.
+
+Until these inputs are confirmed, the system must use unpublished draft events and unset payment and location settings.
+
+**Definition of Done:** A visitor can submit an application for a configured event; the organizer can review it, request a deposit, verify the payment and confirm the booking; both parties receive appropriate notifications; capacity is enforced; and all administrative actions are protected and auditable.
