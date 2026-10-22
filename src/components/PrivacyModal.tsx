@@ -35,7 +35,13 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
           <section className="space-y-2">
             <h4 className="font-serif text-base font-semibold text-[#142A21]">1. Who We Are</h4>
             <p>
-              Sacred Plant Spirit Healing operates this website and processes applications for its ceremonial vigils in the Philippines. Primary Contact: <strong>katinawanph@gmail.com</strong>.
+              Sacred Plant Spirit Healing operates this website and processes applications for its ceremonial vigils in the Philippines. Primary Contact:{' '}
+              <a
+                href="mailto:katinawanph@gmail.com"
+                className="inline-flex items-center gap-1 font-semibold text-[#142A21] underline hover:text-[#C4A46A]"
+              >
+                Email Facilitator (mailto)
+              </a>.
             </p>
           </section>
 
@@ -66,7 +72,13 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
           <section className="space-y-2">
             <h4 className="font-serif text-base font-semibold text-[#142A21]">5. Retention &amp; Rights</h4>
             <p>
-              Application and payment records are retained only for the duration required to conduct the gathering and complete operational audit records. Under Philippine data protection laws, you retain the right to request access, correction, or deletion of your records by emailing <strong>katinawanph@gmail.com</strong>.
+              Application and payment records are retained only for the duration required to conduct the gathering and complete operational audit records. Under Philippine data protection laws, you retain the right to request access, correction, or deletion of your records by{' '}
+              <a
+                href="mailto:katinawanph@gmail.com"
+                className="inline-flex items-center gap-1 font-semibold text-[#142A21] underline hover:text-[#C4A46A]"
+              >
+                Emailing Organizer (mailto)
+              </a>.
             </p>
           </section>
         </div>

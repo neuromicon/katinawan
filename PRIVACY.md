@@ -4,7 +4,7 @@
 *Last updated: October 2026*
 
 ## 1. Scope & Contact
-Sacred Plant Spirit Healing operates the Katin-awan informational website and ceremony application workflow. For data queries, contact `katinawanph@gmail.com`.
+Sacred Plant Spirit Healing operates the Katin-awan informational website and ceremony application workflow. For data queries, contact the organizer via the mailto contact action on the main website.
 
 ## 2. Personal Data Handled
 - **Applicant Information:** Name, email, attendance count, preferred contact channel (Email or Messenger), personal reflections/intentions.

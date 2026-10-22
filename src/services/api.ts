@@ -62,7 +62,8 @@ export function initLocalStorage(): void {
     localStorage.removeItem(STORAGE_KEYS.EVENTS);
   }
 
-  if (!localStorage.getItem(STORAGE_KEYS.EVENTS)) {
+  const existingEvents = getStorage<CeremonyEvent[]>(STORAGE_KEYS.EVENTS, []);
+  if (!existingEvents || existingEvents.length === 0) {
     setStorage(STORAGE_KEYS.EVENTS, INITIAL_EVENTS);
   }
   if (!localStorage.getItem(STORAGE_KEYS.APPLICATIONS)) {
@@ -83,7 +84,7 @@ export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
     try {
       const res = await fetch(`${scriptUrl}?action=getPublishedEvents`);
       const json = await res.json();
-      if (json.status === 'success' && Array.isArray(json.data)) {
+      if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
         return json.data;
       }
     } catch (e) {

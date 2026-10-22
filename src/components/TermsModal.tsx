@@ -56,7 +56,13 @@ export const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
           <section className="space-y-2">
             <h4 className="font-serif text-base font-semibold text-[#142A21]">4. Cancellations &amp; Rescheduling</h4>
             <p>
-              If an applicant needs to cancel, notify the organizer immediately at <strong>katinawanph@gmail.com</strong>. Due to limited container sizing, deposit refunds or date rescheduling are handled on a case-by-case basis per notice timeline. If an event is cancelled by the organizers due to unforeseen weather or circumstances, applicants will receive a full refund or transfer.
+              If an applicant needs to cancel, notify the organizer immediately via the{' '}
+              <a
+                href="mailto:katinawanph@gmail.com"
+                className="inline-flex items-center gap-1 font-semibold text-[#142A21] underline hover:text-[#C4A46A]"
+              >
+                Organizer Email (mailto)
+              </a>. Due to limited container sizing, deposit refunds or date rescheduling are handled on a case-by-case basis per notice timeline. If an event is cancelled by the organizers due to unforeseen weather or circumstances, applicants will receive a full refund or transfer.
             </p>
           </section>
 

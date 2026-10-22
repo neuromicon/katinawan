@@ -5,6 +5,7 @@
  */
 
 function sendApplicationReceivedEmail(data) {
+  const contactEmail = getSetting('CONTACT_EMAIL') || 'the organizer';
   const subject = "We've received your ceremony application";
   const bodyText = 
     `Hello ${data.full_name},\n\n` +
@@ -13,7 +14,7 @@ function sendApplicationReceivedEmail(data) {
     `Event: ${data.event_title}\n` +
     `Requested date: ${data.event_date}\n\n` +
     `Submitting an application does not confirm a place. We will contact you with the next steps after the organizer reviews your application.\n\n` +
-    `If you have questions, contact us at katinawanph@gmail.com.\n\n` +
+    `If you have questions, please contact ${contactEmail}.\n\n` +
     `Warm regards,\nSacred Plant Spirit Healing`;
 
   MailApp.sendEmail({
@@ -24,6 +25,7 @@ function sendApplicationReceivedEmail(data) {
 }
 
 function sendApplicationApprovedDepositRequiredEmail(applicant, event, options) {
+  const contactEmail = getSetting('CONTACT_EMAIL') || 'the organizer';
   const subject = "Next steps for your ceremony application";
   const amount = (options && options.deposit_amount) || (event && event.deposit_amount) || 'Configured upon review';
   const currency = (event && event.deposit_currency) || 'PHP';
@@ -37,7 +39,7 @@ function sendApplicationApprovedDepositRequiredEmail(applicant, event, options) 
     `Deposit amount: ${amount} ${currency}\n` +
     `Payment method and instructions: ${instructions}\n\n` +
     `Please follow only the payment instructions included in this message. Your booking is not confirmed until the organizer verifies the required payment and sends a separate confirmation.\n\n` +
-    `If you have questions, contact katinawanph@gmail.com.\n\n` +
+    `If you have questions, please reach out to ${contactEmail}.\n\n` +
     `Warm regards,\nSacred Plant Spirit Healing`;
 
   MailApp.sendEmail({
@@ -48,6 +50,7 @@ function sendApplicationApprovedDepositRequiredEmail(applicant, event, options) 
 }
 
 function sendBookingConfirmedEmail(applicant, event) {
+  const contactEmail = getSetting('CONTACT_EMAIL') || 'the organizer';
   const subject = "Your ceremony booking is confirmed";
   const bodyText =
     `Hello ${applicant.full_name},\n\n` +
@@ -56,7 +59,7 @@ function sendBookingConfirmedEmail(applicant, event) {
     `Time zone: ${event ? event.timezone : 'Asia/Manila (GMT+8)'}\n` +
     `Location & arrival instructions: Detailed sanctuary coordinates and arrival protocol have been prepared for you. Please check in with the organizer.\n\n` +
     `Please review the preparation guide carefully before travelling. If anything changes, the organizer will contact you using the details provided.\n\n` +
-    `If you need to contact the organizer, email katinawanph@gmail.com.\n\n` +
+    `If you need to contact the organizer, please email ${contactEmail}.\n\n` +
     `Warm regards,\nSacred Plant Spirit Healing`;
 
   MailApp.sendEmail({
@@ -82,11 +85,12 @@ function sendWaitlistNotificationEmail(applicant, event) {
 }
 
 function sendDeclinedNotificationEmail(applicant, event) {
+  const contactEmail = getSetting('CONTACT_EMAIL') || 'the organizer';
   const subject = "Update on your ceremony application";
   const bodyText =
     `Hello ${applicant.full_name},\n\n` +
     `Thank you for your interest in Sacred Plant Spirit Healing. After review, we are unable to confirm your application for ${event ? event.title : 'the upcoming gathering'}.\n\n` +
-    `If you have questions, please reach out to katinawanph@gmail.com.\n\n` +
+    `If you have questions, please reach out to ${contactEmail}.\n\n` +
     `Sacred Plant Spirit Healing`;
 
   MailApp.sendEmail({

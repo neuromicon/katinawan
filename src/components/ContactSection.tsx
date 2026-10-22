@@ -14,86 +14,94 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-[#F4F0E6] text-[#142A21] relative border-t border-[#B8C7AE]/30">
+    <section id="contact" className="py-16 sm:py-20 bg-[#F4F0E6] text-[#142A21] relative border-t border-[#B8C7AE]/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <span className="text-xs uppercase tracking-widest text-[#7a8c6f] font-semibold block mb-2">
             Connect
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#142A21] font-normal tracking-tight mb-4">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#142A21] font-normal tracking-tight mb-4 leading-tight">
             Contact the Organizer
           </h2>
           <p className="text-sm sm:text-base text-[#142A21]/80 font-light leading-relaxed">
-            Have questions regarding upcoming dates, eligibility, ceremonial etiquette, or travel arrangements? Reach out to us directly.
+            Have questions regarding upcoming Saturday dates, eligibility, ceremonial preparation, or travel arrangements in Visayas? Reach out to us directly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
           {/* Column 1: Verified Channels & Location */}
           <div className="space-y-6">
-            <div className="bg-[#FAF8F2] p-8 rounded-2xl border border-[#B8C7AE]/40 shadow-sm space-y-6">
-              <h3 className="font-serif text-2xl text-[#142A21]">Direct Communication Channels</h3>
+            <div className="bg-[#FAF8F2] p-6 sm:p-8 rounded-2xl border border-[#B8C7AE]/40 shadow-xs space-y-5">
+              <h3 className="font-serif text-xl sm:text-2xl text-[#142A21]">
+                Direct Communication Channels
+              </h3>
               
               <div className="space-y-4">
-                {/* Email */}
-                <a
-                  href="mailto:katinawanph@gmail.com"
-                  className="flex items-start gap-4 p-4 rounded-xl bg-white border border-[#B8C7AE]/30 hover:border-[#C4A46A] transition-all group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#142A21] text-[#C4A46A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <Mail className="w-5 h-5" />
+                {/* Email (Hidden behind mailto button) */}
+                <div className="p-4 rounded-xl bg-white border border-[#B8C7AE]/30 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-[#142A21] text-[#C4A46A] flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold block">
+                        Organizer Email
+                      </span>
+                      <p className="text-xs text-[#142A21]/70 mt-0.5">
+                        Protected contact channel for detailed enquiries &amp; logistics.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold block">
-                      Primary Email
-                    </span>
-                    <span className="text-sm font-semibold text-[#142A21] group-hover:text-[#b08f53]">
-                      katinawanph@gmail.com
-                    </span>
-                    <p className="text-xs text-[#142A21]/70 mt-0.5">
-                      For detailed applications, health questionnaires &amp; logistics.
-                    </p>
-                  </div>
-                </a>
+                  <a
+                    href="mailto:katinawanph@gmail.com"
+                    className="w-full py-2.5 px-4 rounded-lg bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xs"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-[#C4A46A]" />
+                    <span>Email Organizer (mailto)</span>
+                  </a>
+                </div>
 
-                {/* Facebook Messenger */}
-                <a
-                  href="https://m.me/katinawanph"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-4 p-4 rounded-xl bg-white border border-[#B8C7AE]/30 hover:border-[#C4A46A] transition-all group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#1b382c] text-[#C4A46A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <MessageCircle className="w-5 h-5" />
+                {/* Facebook Messenger (Hidden behind chat button) */}
+                <div className="p-4 rounded-xl bg-white border border-[#B8C7AE]/30 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-[#1b382c] text-[#C4A46A] flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold block">
+                        Messenger Chat
+                      </span>
+                      <p className="text-xs text-[#142A21]/70 mt-0.5">
+                        For quick questions and verified chat with facilitators.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold block">
-                      Facebook Messenger
-                    </span>
-                    <span className="text-sm font-semibold text-[#142A21] group-hover:text-[#b08f53]">
-                      m.me/katinawanph
-                    </span>
-                    <p className="text-xs text-[#142A21]/70 mt-0.5">
-                      For quick informal questions and verified messenger chats.
-                    </p>
-                  </div>
-                </a>
+                  <a
+                    href="https://www.messenger.com/t/109269153922979"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 px-4 rounded-lg bg-[#1b382c] hover:bg-[#234537] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-all border border-[#C4A46A]/30 flex items-center justify-center gap-2 shadow-xs"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-[#C4A46A]" />
+                    <span>Open Messenger Chat</span>
+                  </a>
+                </div>
 
                 {/* Location */}
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-[#B8C7AE]/30">
+                <div className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-[#B8C7AE]/30">
                   <div className="w-10 h-10 rounded-full bg-[#FAF8F2] text-[#7a8c6f] border border-[#B8C7AE]/40 flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold block">
                       Sanctuary Location
                     </span>
-                    <span className="text-sm font-semibold text-[#142A21]">
+                    <span className="text-sm font-semibold text-[#142A21] block">
                       Visayas Island Region, Philippines
                     </span>
-                    <p className="text-xs text-[#142A21]/70 mt-0.5">
-                      Secluded natural sanctuary. Directions and pin provided upon verified booking.
+                    <p className="text-xs text-[#142A21]/70 mt-0.5 leading-relaxed">
+                      Secluded natural sanctuary. Directions and pin provided upon confirmed booking.
                     </p>
                   </div>
                 </div>
@@ -109,17 +117,19 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Column 2: Send Message Form */}
-          <div className="bg-white p-8 sm:p-10 rounded-2xl border border-[#B8C7AE]/40 shadow-sm">
-            <h3 className="font-serif text-2xl text-[#142A21] mb-2">Send an Enquiry</h3>
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#B8C7AE]/40 shadow-xs">
+            <h3 className="font-serif text-xl sm:text-2xl text-[#142A21] mb-2">
+              Send an Enquiry
+            </h3>
             <p className="text-xs text-[#7a8c6f] mb-6">
               Our organizers review incoming correspondence thoughtfully.
             </p>
 
             {submitted ? (
-              <div className="py-12 text-center space-y-3">
+              <div className="py-10 text-center space-y-3">
                 <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
                 <h4 className="font-serif text-xl text-[#142A21] font-semibold">Message Received</h4>
-                <p className="text-xs text-[#142A21]/80 max-w-sm mx-auto">
+                <p className="text-xs text-[#142A21]/80 max-w-sm mx-auto leading-relaxed">
                   Thank you for reaching out. The organizer will respond to your provided email address.
                 </p>
                 <button
@@ -175,7 +185,7 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-lg bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-lg bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-colors shadow-xs flex items-center justify-center gap-2"
                 >
                   <Send className="w-3.5 h-3.5 text-[#C4A46A]" />
                   <span>Send Message</span>

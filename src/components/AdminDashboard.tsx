@@ -385,13 +385,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="password"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
-                  placeholder="Enter PIN (Demo: 1234 or katinawan)"
+                  placeholder="Enter Organizer Passcode"
                   className="w-full text-center px-4 py-3 rounded-lg border border-[#B8C7AE]/60 text-sm tracking-widest focus:border-[#C4A46A] focus:outline-none"
                   autoFocus
                 />
                 {pinError && (
                   <span className="text-xs text-red-600 mt-2 block">
-                    Invalid credentials. Use <strong>1234</strong> or <strong>katinawan</strong> for preview.
+                    Invalid passcode. Please enter the authorized organizer passcode.
                   </span>
                 )}
               </div>
