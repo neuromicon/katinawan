@@ -37,10 +37,10 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
             Application
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight mb-4 leading-tight">
-            Ceremony Application Form
+            Apply for a Ceremony
           </h2>
           <p className="text-sm sm:text-base text-[#F4F0E6]/80 font-light leading-relaxed">
-            Submit an application through the official Google Form. Submitting the form does not confirm a booking; the organizer reviews each application separately.
+            Submit your application through the official Google Form. Each application is reviewed individually by the organizer. Submitting does not confirm a booking.
           </p>
         </div>
 

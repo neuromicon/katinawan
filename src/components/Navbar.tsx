@@ -6,7 +6,7 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { name: 'The Ceremony', href: '#ceremony' },
+  { name: 'Ceremonies', href: '#ceremony' },
   { name: 'Upcoming', href: '#upcoming' },
   { name: 'Gallery', href: '#gallery' },
   { name: 'Preparation', href: '#preparation' },

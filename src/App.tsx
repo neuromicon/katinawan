@@ -56,7 +56,7 @@ export default function App() {
       <main className="flex-1">
         <Hero
           onExploreUpcoming={() => scrollToSection('upcoming')}
-          onLearnVelada={() => scrollToSection('ceremony')}
+          onLearnCeremonies={() => scrollToSection('ceremony')}
         />
 
         <CeremonySection
