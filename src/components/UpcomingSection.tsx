@@ -1,341 +1,156 @@
-import React, { useState, useMemo } from 'react';
-import { CeremonyEvent } from '../types';
-import { Calendar, Users, MapPin, Clock, ArrowRight, ShieldCheck, Search, Filter, Sparkles } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import type { CeremonyEvent } from '../types';
+import { Calendar, MapPin, Search, Users, ArrowRight, RefreshCw } from 'lucide-react';
 
 interface UpcomingSectionProps {
   events: CeremonyEvent[];
   selectedEventId: string;
   onSelectEvent: (eventId: string) => void;
-  isLoading?: boolean;
+  isLoading: boolean;
+  loadError: boolean;
+  onRetry: () => void;
+  onApplyClick: () => void;
+}
+
+function eventDate(value: string, options: Intl.DateTimeFormatOptions): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString('en-US', options);
 }
 
 export const UpcomingSection: React.FC<UpcomingSectionProps> = ({
   events,
   selectedEventId,
   onSelectEvent,
-  isLoading = false
+  isLoading,
+  loadError,
+  onRetry,
+  onApplyClick
 }) => {
-  const [selectedYear, setSelectedYear] = useState<string>('ALL');
-  const [selectedMonth, setSelectedMonth] = useState<string>('ALL');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [displayCount, setDisplayCount] = useState<number>(12);
+  const [query, setQuery] = useState('');
+  const [selectedYear, setSelectedYear] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
-  const formatDate = (isoString: string) => {
-    try {
-      const d = new Date(isoString);
-      return d.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      });
-    } catch {
-      return isoString;
-    }
-  };
+  const years = useMemo(() => Array.from(new Set(events.flatMap((event) => {
+    const date = new Date(event.starts_at);
+    return Number.isNaN(date.getTime()) ? [] : [String(date.getFullYear())];
+  }))).sort(), [events]);
 
-  const formatTime = (isoString: string) => {
-    try {
-      const d = new Date(isoString);
-      return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    } catch {
-      return '3:00 PM';
-    }
-  };
-
-  // Filter events by year, month, search query
-  const filteredEvents = useMemo(() => {
-    return events.filter((evt) => {
-      const date = new Date(evt.starts_at);
-      const year = date.getUTCFullYear().toString();
-      const month = (date.getUTCMonth() + 1).toString();
-
-      if (selectedYear !== 'ALL' && year !== selectedYear) return false;
-      if (selectedMonth !== 'ALL' && month !== selectedMonth) return false;
-
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const titleMatch = evt.title.toLowerCase().includes(query);
-        const dateMatch = formatDate(evt.starts_at).toLowerCase().includes(query);
-        if (!titleMatch && !dateMatch) return false;
-      }
-
-      return true;
-    });
-  }, [events, selectedYear, selectedMonth, searchQuery]);
-
-  const visibleEvents = useMemo(() => {
-    return filteredEvents.slice(0, displayCount);
-  }, [filteredEvents, displayCount]);
-
-  const handleSelectAndScroll = (eventId: string) => {
-    onSelectEvent(eventId);
-    const target = document.getElementById('apply');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const getStatusBadge = (status: string, remaining: number) => {
-    switch (status) {
-      case 'AVAILABLE':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-            Open ({remaining} spots left)
-          </span>
-        );
-      case 'ALMOST_FULL':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
-            Almost Full ({remaining} spots left)
-          </span>
-        );
-      case 'WAITLIST':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-300">
-            Waitlist Available
-          </span>
-        );
-      default:
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-700">
-            {status}
-          </span>
-        );
-    }
-  };
+  const filteredEvents = useMemo(() => events
+    .filter((event) => {
+      const date = new Date(event.starts_at);
+      if (selectedYear !== 'all' && String(date.getFullYear()) !== selectedYear) return false;
+      if (selectedMonth !== 'all' && String(date.getMonth() + 1) !== selectedMonth) return false;
+      const haystack = `${event.title} ${event.description} ${event.starts_at}`.toLowerCase();
+      return haystack.includes(query.toLowerCase());
+    })
+    .sort((a, b) => Date.parse(a.starts_at) - Date.parse(b.starts_at)),
+  [events, query, selectedYear, selectedMonth]);
 
   return (
-    <section id="upcoming" className="py-16 sm:py-20 bg-[#FAF8F2] text-[#142A21] relative border-t border-[#B8C7AE]/30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="max-w-3xl mb-10">
-          <span className="text-xs uppercase tracking-widest text-[#7a8c6f] font-semibold block mb-2">
-            Ceremonial Calendar
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#142A21] font-normal tracking-tight mb-4 leading-tight">
-            Upcoming Velada Gatherings
-          </h2>
-          <p className="text-sm sm:text-base text-[#142A21]/80 font-light leading-relaxed">
-            Ceremonies take place every Saturday at <strong>3:00 PM</strong> through Sunday <strong>12:00 PM noon</strong>. To preserve depth, safety, and individual care, each container is strictly capped at 10 to 12 participants.
+    <section id="upcoming" className="py-16 sm:py-20 bg-[#FAF8F2] text-[#142A21] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          <span className="text-xs uppercase tracking-widest text-[#7a8c6f] font-semibold block mb-2">Calendar</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight mb-4 leading-tight">Confirmed Dates</h2>
+          <p className="text-sm sm:text-base text-[#142A21]/75 font-light leading-relaxed">
+            This calendar contains only events marked Published=TRUE in the public Events sheet. No dates are generated locally.
           </p>
         </div>
 
-        {/* Filters Bar */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#B8C7AE]/40 shadow-xs mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            {/* Year Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-              <span className="text-xs uppercase tracking-wider text-[#7a8c6f] font-semibold mr-1 hidden sm:inline">
-                Year:
-              </span>
-              {[
-                { label: 'All Dates', value: 'ALL' },
-                { label: '2026', value: '2026' },
-                { label: '2027', value: '2027' },
-                { label: '2028', value: '2028' }
-              ].map((tab) => (
-                <button
-                  key={tab.value}
-                  type="button"
-                  onClick={() => {
-                    setSelectedYear(tab.value);
-                    setDisplayCount(12);
-                  }}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
-                    selectedYear === tab.value
-                      ? 'bg-[#142A21] text-[#F4F0E6] shadow-xs'
-                      : 'bg-[#FAF8F2] text-[#142A21]/80 hover:bg-[#F4F0E6] border border-[#B8C7AE]/30'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Quick stats badge */}
-            <div className="text-xs text-[#7a8c6f] font-mono self-end sm:self-center">
-              Showing {visibleEvents.length} of {filteredEvents.length} gatherings
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#B8C7AE]/20">
-            {/* Search Input */}
-            <div className="relative">
-              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8 p-4 bg-white rounded-xl border border-[#B8C7AE]/30 shadow-xs">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            <label className="relative w-full sm:w-64">
+              <span className="sr-only">Search confirmed events</span>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7a8c6f]" />
               <input
                 type="text"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setDisplayCount(12);
-                }}
-                placeholder="Search by month (e.g. November, March)..."
-                className="w-full pl-10 pr-3.5 py-2 rounded-lg bg-[#FAF8F2] border border-[#B8C7AE]/40 text-xs text-[#142A21] focus:outline-none focus:border-[#C4A46A]"
+                placeholder="Search dates or events"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                className="w-full pl-9 pr-4 py-2 rounded-lg border border-[#B8C7AE]/50 text-sm focus:border-[#C4A46A] focus:outline-none"
               />
-            </div>
-
-            {/* Month Dropdown */}
-            <div className="relative">
-              <select
-                value={selectedMonth}
-                onChange={(e) => {
-                  setSelectedMonth(e.target.value);
-                  setDisplayCount(12);
-                }}
-                className="w-full px-3.5 py-2 rounded-lg bg-[#FAF8F2] border border-[#B8C7AE]/40 text-xs text-[#142A21] focus:outline-none focus:border-[#C4A46A]"
-              >
-                <option value="ALL">All Months</option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-              </select>
-            </div>
+            </label>
+            <select value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)} className="w-full sm:w-auto px-3 py-2 rounded-lg border border-[#B8C7AE]/50 text-sm focus:outline-none">
+              <option value="all">All years</option>
+              {years.map((year) => <option key={year} value={year}>{year}</option>)}
+            </select>
+            <select value={selectedMonth} onChange={(event) => setSelectedMonth(event.target.value)} className="w-full sm:w-auto px-3 py-2 rounded-lg border border-[#B8C7AE]/50 text-sm focus:outline-none">
+              <option value="all">All months</option>
+              {Array.from({ length: 12 }, (_, index) => <option key={index + 1} value={String(index + 1)}>{new Date(2020, index, 1).toLocaleDateString('en-US', { month: 'long' })}</option>)}
+            </select>
           </div>
+          <span className="text-xs text-[#7a8c6f] whitespace-nowrap">
+            {isLoading ? 'Loading dates…' : `${filteredEvents.length} confirmed ${filteredEvents.length === 1 ? 'date' : 'dates'}`}
+          </span>
         </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="py-12 text-center text-[#7a8c6f] text-sm animate-pulse">
-            Loading upcoming gatherings...
-          </div>
-        )}
-
-        {/* No Matches Found */}
-        {!isLoading && filteredEvents.length === 0 && (
-          <div className="bg-white p-8 sm:p-10 rounded-2xl border border-[#B8C7AE]/40 text-center max-w-lg mx-auto my-8">
-            <Calendar className="w-8 h-8 text-[#7a8c6f] mx-auto mb-3" />
-            <h3 className="font-serif text-xl text-[#142A21] mb-2 font-normal">
-              No Gatherings Match Your Filter
-            </h3>
-            <p className="text-xs text-[#142A21]/75 mb-4">
-              Clear filters or choose another year to explore all scheduled Saturday dates.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedYear('ALL');
-                setSelectedMonth('ALL');
-                setSearchQuery('');
-              }}
-              className="px-4 py-2 rounded bg-[#142A21] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider"
-            >
-              Reset Filters
+        {isLoading ? (
+          <div className="py-14 text-center text-sm text-[#7a8c6f]" role="status">Loading dates…</div>
+        ) : loadError ? (
+          <div className="py-12 px-6 text-center bg-white rounded-2xl border border-rose-200" role="alert">
+            <p className="font-serif text-2xl text-[#142A21]">Не удалось загрузить даты</p>
+            <button onClick={onRetry} className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#B8C7AE] text-sm hover:bg-[#FAF8F2]">
+              <RefreshCw className="w-4 h-4" /> Retry
             </button>
           </div>
-        )}
-
-        {/* Event Cards Grid */}
-        {!isLoading && visibleEvents.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-            {visibleEvents.map((event) => {
-              const isSelected = selectedEventId === event.event_id;
-
+        ) : events.length === 0 ? (
+          <div className="py-12 px-6 text-center bg-white rounded-2xl border border-[#B8C7AE]/30" role="status">
+            <Calendar className="w-8 h-8 mx-auto text-[#7a8c6f] mb-3" />
+            <p className="font-serif text-2xl text-[#142A21]">Подтверждённых дат пока нет</p>
+          </div>
+        ) : filteredEvents.length === 0 ? (
+          <div className="py-12 text-center text-sm text-[#7a8c6f]">No confirmed dates match these filters.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {filteredEvents.map((event) => {
+              const selected = event.event_id === selectedEventId;
               return (
-                <div
-                  key={event.event_id}
-                  className={`flex flex-col justify-between rounded-xl bg-white border transition-all duration-300 p-5 sm:p-6 shadow-xs hover:shadow-md ${
-                    isSelected
-                      ? 'border-[#C4A46A] ring-2 ring-[#C4A46A]/20 bg-[#FBF9F4]'
-                      : 'border-[#B8C7AE]/40 hover:border-[#7a8c6f]'
-                  }`}
-                >
-                  <div>
-                    {/* Status Badge & Capacity */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      {getStatusBadge(event.status, event.remaining_capacity)}
-                      <span className="text-xs text-[#7a8c6f] flex items-center gap-1 font-mono">
-                        <Users className="w-3.5 h-3.5" />
-                        Max {event.capacity}
+                <article key={event.event_id} className={`bg-white rounded-2xl overflow-hidden border shadow-sm transition-all flex flex-col ${selected ? 'border-[#C4A46A] ring-2 ring-[#C4A46A]/20' : 'border-[#B8C7AE]/30 hover:shadow-md'}`}>
+                  <div className="p-5 sm:p-6 flex-1">
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Confirmed
                       </span>
+                      {event.capacity > 0 && <span className="text-[10px] text-[#7a8c6f]">Capacity: {event.capacity}</span>}
                     </div>
+                    <h3 className="font-serif text-xl sm:text-2xl font-semibold leading-snug mb-2">{event.title}</h3>
+                    {event.description && <p className="text-xs text-[#142A21]/75 leading-relaxed mb-4">{event.description}</p>}
 
-                    {/* Date Heading */}
-                    <div className="flex items-start gap-2.5 mb-2">
-                      <Calendar className="w-4 h-4 text-[#C4A46A] flex-shrink-0 mt-0.5" />
-                      <div>
-                        <h3 className="font-serif text-xl sm:text-2xl text-[#142A21] leading-tight font-medium">
-                          {formatDate(event.starts_at)}
-                        </h3>
-                        <span className="text-xs text-[#7a8c6f] font-light">
-                          Vigil concludes {formatDate(event.ends_at)}
-                        </span>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-start gap-2.5">
+                        <Calendar className="w-4 h-4 mt-0.5 text-[#b08f53] flex-shrink-0" />
+                        <div>
+                          <p className="font-semibold">{eventDate(event.starts_at, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                          {event.ends_at && !Number.isNaN(Date.parse(event.ends_at)) && <p className="text-xs text-[#7a8c6f]">Ends {eventDate(event.ends_at, { month: 'short', day: 'numeric', year: 'numeric' })}</p>}
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-[#142A21]/75 leading-relaxed mb-4 mt-2">
-                      {event.description}
-                    </p>
-
-                    {/* Time & Venue Information */}
-                    <div className="space-y-2 text-xs text-[#142A21]/80 mb-5 pb-4 border-b border-[#B8C7AE]/20">
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-3.5 h-3.5 text-[#7a8c6f] flex-shrink-0" />
-                        <span className="font-semibold text-[#142A21]">
-                          Saturday {formatTime(event.starts_at)} – Sunday 12:00 PM
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-[#7a8c6f] flex-shrink-0" />
-                        <span className="text-[#142A21]/90">
-                          {event.location_label}
-                        </span>
-                      </div>
+                      {event.location_label && <div className="flex items-start gap-2.5 text-[#7a8c6f]">
+                        <MapPin className="w-4 h-4 mt-0.5 text-[#b08f53] flex-shrink-0" />
+                        <span className="text-xs">{event.location_visibility === 'PRIVATE' ? 'Private location shared with confirmed participants' : event.location_label}</span>
+                      </div>}
+                      {event.capacity > 0 && <div className="flex items-center gap-2.5 text-[#7a8c6f]">
+                        <Users className="w-4 h-4 text-[#b08f53]" />
+                        <span className="text-xs">Capacity: {event.capacity}</span>
+                      </div>}
                     </div>
                   </div>
-
-                  {/* Card Action */}
-                  <div>
+                  <div className="p-4 pt-0">
                     <button
-                      type="button"
-                      onClick={() => handleSelectAndScroll(event.event_id)}
-                      className={`w-full py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
-                        isSelected
-                          ? 'bg-[#142A21] text-[#F4F0E6]'
-                          : 'bg-[#C4A46A] hover:bg-[#b08f53] text-[#142A21] shadow-xs'
-                      }`}
+                      onClick={() => { onSelectEvent(event.event_id); onApplyClick(); }}
+                      className="w-full py-2.5 px-4 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6]"
                     >
-                      <span>{isSelected ? 'Selected Date' : 'Apply for this Saturday'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      Select date and open form <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>
         )}
 
-        {/* Load More Button */}
-        {!isLoading && visibleEvents.length < filteredEvents.length && (
-          <div className="text-center mb-12">
-            <button
-              type="button"
-              onClick={() => setDisplayCount((prev) => prev + 12)}
-              className="px-8 py-3 rounded-xl bg-[#142A21] hover:bg-[#1b382c] text-[#F4F0E6] text-xs font-semibold uppercase tracking-wider transition-all shadow-sm"
-            >
-              Show Next 12 Saturdays ({filteredEvents.length - visibleEvents.length} more)
-            </button>
-          </div>
-        )}
-
-        {/* Bottom Safety & Availability Callout */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 p-4 rounded-xl bg-[#F4F0E6] border border-[#B8C7AE]/30 text-xs text-[#142A21]/80 max-w-3xl mx-auto">
-          <ShieldCheck className="w-5 h-5 text-[#7a8c6f] flex-shrink-0" />
-          <p className="leading-relaxed">
-            <strong>Intimate Container Notice:</strong> Every Saturday gathering is limited to 10–12 seekers. Submitting an application on Google Forms reserves your place in the manual review queue.
-          </p>
+        <div className="mt-8 p-4 rounded-xl bg-white border border-[#B8C7AE]/30 text-center text-xs text-[#142A21]/80">
+          Only events explicitly published by the organizer appear in this calendar. An application is not a confirmed booking.
         </div>
       </div>
     </section>

@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /api/
 
-Sitemap: https://katinawan.vercel.app/sitemap.xml
+Sitemap: https://neuromicon.github.io/katinawan/sitemap.xml

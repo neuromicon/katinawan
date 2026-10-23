@@ -1,18 +1,17 @@
-# Privacy Policy & Data Governance
+# Privacy Notice
 
-**Sacred Plant Spirit Healing (Katin-awan)**  
-*Last updated: October 2026*
+**Katin-awan** — last updated October 2026.
 
-## 1. Scope & Contact
-Sacred Plant Spirit Healing operates the Katin-awan informational website and ceremony application workflow. For data queries, contact the organizer via the mailto contact action on the main website.
+## Public event calendar
 
-## 2. Personal Data Handled
-- **Applicant Information:** Name, email, attendance count, preferred contact channel (Email or Messenger), personal reflections/intentions.
-- **Transactional Records:** Application reference (`KTW-YYYYMMDD-XXXX`), status transitions, timestamped consent.
-- **Deposit Reports:** Reference transaction IDs reported for verification. We **never** collect, transmit, or store credit card numbers, CVVs, or bank login passwords.
+The website fetches a CSV export of the Google Sheets tab named `Events`. This is a public feed. Every column in that published tab may be accessible to visitors through the CSV URL, even though the website interface renders only selected fields. Keep applicant names, email addresses, health information, payment data, and private organizer notes out of the published tab. Only rows with `Published=TRUE` are displayed by the website.
 
-## 3. Data Protection Safeguards
-- All public and backend traffic uses TLS/HTTPS encryption.
-- No medical records are gathered through the public form.
-- Google Sheets databases are set to private and accessed solely via authorized Google Apps Script endpoints or direct authenticated access.
-- In accordance with Republic Act No. 10173 (Philippine Data Privacy Act of 2012), users retain rights of access, correction, and erasure upon verified request.
+## Applications and contact
+
+Applications are submitted directly through the embedded Google Form. The website does not implement its own application database, payment form, or browser-side application fallback. The Google Form’s fields, response destination, access permissions, and retention are controlled outside this repository and have not been verified here. Read the form before submitting information.
+
+Email and Messenger links open third-party services. Data shared through those services is handled according to their own policies and the organizer’s account configuration.
+
+## Storage, access, and requests
+
+The static website does not save application, payment, or event records in the visitor’s browser. This repository review does not verify Google Sheet sharing, Google Form response access, Apps Script deployment permissions, retention periods, or deletion procedures. For questions or requests concerning information submitted to the organizer, contact [katinawanph@gmail.com](mailto:katinawanph@gmail.com). The organizer should respond based on the actual systems and settings holding that information.

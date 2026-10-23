@@ -1,79 +1,36 @@
-# Sacred Plant Spirit Healing (Katin-awan)
+# Katin-awan
 
-> Public website and ceremonial reservation portal for Velada nocturnal vigils and sacred plant ceremonies in the Philippines.
+React, Vite, and TypeScript website published on GitHub Pages at [neuromicon.github.io/katinawan](https://neuromicon.github.io/katinawan/).
 
-🌐 **Live Website (GitHub Pages):** [https://neuromicon.github.io/katinawan/](https://neuromicon.github.io/katinawan/)  
-📁 **GitHub Repository:** [https://github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan)  
+## Event calendar
 
----
+The calendar reads CSV from the public `Events` tab in Google Sheets. Only rows whose `Published` cell is exactly `TRUE` are displayed. The published sheet must contain public event data and must not include private application, payment, or organizer notes. Keep a stable `event_id` (or `id`), `title`, `starts_at` (or `start date`), and `Published` column. Optional columns include `ends_at`, `timezone`, `description`, `capacity`, and `location`.
 
-## 🏛️ System Architecture
+The browser requests the published CSV directly. A successful CSV with no `Published=TRUE` rows displays “Подтверждённых дат пока нет”; a network, format, or schema error displays “Не удалось загрузить даты”. There is no local event or application fallback.
 
-The project runs on a serverless, privacy-first static architecture with manual organizer verification:
+`apps-script/Code.gs` contains one read-only `doGet` endpoint that returns public rows from the same `Events` tab, filtered by `Published=TRUE`. The website calendar currently reads the CSV feed directly; the Apps Script endpoint is not used as a client fallback.
 
-```
-[GitHub Repository] ──(build)──> [GitHub Pages]
-                                      │
-                              (submit application)
-                                      ▼
-                                [Google Forms]
-                                      │
-                              (record responses)
-                                      ▼
-                                [Google Sheets]
-                         (restricted organizer access)
-```
+## Forms and media
 
-| Component | Responsibility |
-| :--- | :--- |
-| **GitHub Pages** | High-performance static web interface (React, TypeScript, Tailwind CSS, assets). Zero hosting cost, automated SSL, global CDN. |
-| **Google Forms** | Primary participant application portal: contact details, Saturday vigil selection, intentions, safety screening, and consent. |
-| **Google Sheets** | Private response database and administrative tracker: manual review, deposit verification, booking confirmation. |
-| **Google Apps Script** | Secure Web App bridge connecting the public application interface with private Google Sheets and email notifications. |
+Applications are handled only by the embedded Google Form. The contact section provides email and Messenger links; it does not collect form data on the site.
 
----
+Gallery images live under `public/gallery/`. The build creates `public/gallery/manifest.json` from those files. Welcome and background audio are served from `public/audio/Welcome.mp3` and `public/audio/BGM.mp3`. Audio starts after the first user interaction, plays Welcome first, then loops BGM; volume defaults to 20% and can be muted or adjusted.
 
-## 🌿 Core Sections
+The Google Sheets CSV URL is public client-side configuration in `.env.example` as `VITE_EVENTS_CSV_URL`. Changing it does not make the sheet private. Publish only fields intended for every visitor.
 
-1. **The Ceremony (Velada):** Traditional Mazatecan nocturnal vigil with powdered mushroom and ceremonial cacao, Philippine shamanic heritage (*Babaylan / Katalonan*), the meaning of *katin-awan* (Cebuano for *clarity and enlightenment*), and mandatory non-medical safety disclosures.
-2. **Gathering Calendar:** Saturday nocturnal vigils scheduled at 3:00 PM with intimate circle capacity (10 to 12 seekers). Year filters, month selection, and real-time availability.
-3. **Application & Intentions:** Embedded official Google Form with full-screen opening option, plus direct portal submission with reference tracking.
-4. **Preparation Guide (La Dieta):** Phased dietary guidelines (avoiding alcohol, recreational drugs, and toxic media starting Monday; avoiding meat and sexual activity 2 days prior), interactive packing checklist, and weekend timetable.
-5. **FAQ & Direct Contacts:** 14 categorized questions and contact action buttons (mailto email and Facebook Messenger).
-6. **Organizer Console:** Private administrative interface with Google Drive backup, Google Sheets synchronization, and audit logging.
+## Local development
 
----
-
-## 🛠️ Local Development & Build
+The repository uses `bun.lock` as its dependency lockfile.
 
 ```bash
-# Install dependencies
-npm install
-
-# Start local development server (port 3000)
-npm run dev
-
-# Run TypeScript type check
-npm run lint
-
-# Build production bundle for GitHub Pages
-npm run build
+bun install --frozen-lockfile
+bun run dev
+bun run lint
+bun run build
 ```
 
----
+`bun run build` writes the deployable site to `docs/` with the Vite base path `/katinawan/`. The build clears `docs/` before generating the Pages artifact; keep source assets in `public/`, not in `docs/`.
 
-## 🚀 Publishing to GitHub Pages
+## GitHub Pages deployment
 
-1. Open repository settings at **[github.com/neuromicon/katinawan](https://github.com/neuromicon/katinawan)**.
-2. Go to **Settings** → **Pages**.
-3. Under **Build and deployment**:
-   - **Source**: Select **Deploy from a branch**
-   - **Branch**: Select **`main`**, and select the folder **`/docs`**
-   - Click **Save**.
-4. The website will be live at: **[https://neuromicon.github.io/katinawan/](https://neuromicon.github.io/katinawan/)**
-
----
-
-## 📄 License & Copyright
-
-Copyright © 2026 Sacred Plant Spirit Healing (Katin-awan). All rights reserved.
+`.github/workflows/deploy-pages.yml` type-checks and builds on pushes and pull requests to `main`. Pushes to `main` are deployed with the GitHub Pages artifact actions. In the repository, set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The workflow uploads the generated `docs/` directory and deploys it automatically.

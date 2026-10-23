@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { CeremonyEvent } from './types';
+import React, { useEffect, useState } from 'react';
+import type { CeremonyEvent } from './types';
 import { fetchPublishedEvents } from './services/api';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -12,62 +12,47 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { PrivacyModal } from './components/PrivacyModal';
 import { TermsModal } from './components/TermsModal';
-import { StatusCheckModal } from './components/StatusCheckModal';
-import { AdminDashboard } from './components/AdminDashboard';
+import { GallerySection } from './components/GallerySection';
+import AudioPlayer from './components/AudioPlayer';
 
 export default function App() {
   const [events, setEvents] = useState<CeremonyEvent[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState<string>('');
-  const [isLoadingEvents, setIsLoadingEvents] = useState(true);
-
-  // Modal states
+  const [selectedEventId, setSelectedEventId] = useState('');
+  const [eventLoadState, setEventLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
-  const [statusCheckOpen, setStatusCheckOpen] = useState(false);
-  const [adminOpen, setAdminOpen] = useState(false);
 
   const loadEvents = async () => {
+    setEventLoadState('loading');
     try {
-      setIsLoadingEvents(true);
-      const data = await fetchPublishedEvents();
-      setEvents(data);
-      if (data.length > 0 && !selectedEventId) {
-        // default select first available event
-        const firstAvailable = data.find((e) => e.status !== 'CLOSED' && e.status !== 'CANCELLED');
-        if (firstAvailable) {
-          setSelectedEventId(firstAvailable.event_id);
-        }
-      } else if (data.length === 0) {
-        setSelectedEventId('flexible');
-      }
-    } catch (err) {
-      console.error('Failed to load events:', err);
-    } finally {
-      setIsLoadingEvents(false);
+      const publishedEvents = await fetchPublishedEvents();
+      setEvents(publishedEvents);
+      setSelectedEventId((current) =>
+        publishedEvents.some((event) => event.event_id === current)
+          ? current
+          : publishedEvents[0]?.event_id ?? ''
+      );
+      setEventLoadState('ready');
+    } catch (error) {
+      console.error('Unable to load published event dates.', error);
+      setEvents([]);
+      setSelectedEventId('');
+      setEventLoadState('error');
     }
   };
 
   useEffect(() => {
-    loadEvents();
+    void loadEvents();
   }, []);
 
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F0E6] text-[#142A21] selection:bg-[#C4A46A]/30">
-      {/* Navigation */}
-      <Navbar
-        onOpenAdmin={() => setAdminOpen(true)}
-        onOpenStatusCheck={() => setStatusCheckOpen(true)}
-        onSelectApply={() => scrollToSection('apply')}
-      />
+      <Navbar onSelectApply={() => scrollToSection('apply')} />
 
-      {/* Main Sections */}
       <main className="flex-1">
         <Hero
           onExploreUpcoming={() => scrollToSection('upcoming')}
@@ -82,53 +67,34 @@ export default function App() {
         <UpcomingSection
           events={events}
           selectedEventId={selectedEventId}
-          onSelectEvent={(id) => setSelectedEventId(id)}
-          isLoading={isLoadingEvents}
+          onSelectEvent={setSelectedEventId}
+          isLoading={eventLoadState === 'loading'}
+          loadError={eventLoadState === 'error'}
+          onRetry={() => void loadEvents()}
+          onApplyClick={() => scrollToSection('apply')}
         />
+
+        <GallerySection />
 
         <BookingSection
           events={events}
           selectedEventId={selectedEventId}
-          onSelectEvent={(id) => setSelectedEventId(id)}
           onOpenPrivacy={() => setPrivacyOpen(true)}
-          onApplicationSubmitted={loadEvents}
         />
 
         <PreparationSection />
-
         <FaqSection />
-
         <ContactSection />
       </main>
 
-      {/* Footer */}
       <Footer
         onOpenPrivacy={() => setPrivacyOpen(true)}
         onOpenTerms={() => setTermsOpen(true)}
-        onOpenAdmin={() => setAdminOpen(true)}
       />
 
-      {/* Modals & Dialogs */}
-      <PrivacyModal
-        isOpen={privacyOpen}
-        onClose={() => setPrivacyOpen(false)}
-      />
-
-      <TermsModal
-        isOpen={termsOpen}
-        onClose={() => setTermsOpen(false)}
-      />
-
-      <StatusCheckModal
-        isOpen={statusCheckOpen}
-        onClose={() => setStatusCheckOpen(false)}
-      />
-
-      <AdminDashboard
-        isOpen={adminOpen}
-        onClose={() => setAdminOpen(false)}
-        onDataChanged={loadEvents}
-      />
+      <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
+      <TermsModal isOpen={termsOpen} onClose={() => setTermsOpen(false)} />
+      <AudioPlayer />
     </div>
   );
 }
