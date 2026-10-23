@@ -1,5 +1,5 @@
 import React from 'react';
-import { CeremonyEvent } from '../types';
+import type { CeremonyEvent } from '../types';
 import { ExternalLink, FileText, ShieldCheck } from 'lucide-react';
 
 interface BookingSectionProps {

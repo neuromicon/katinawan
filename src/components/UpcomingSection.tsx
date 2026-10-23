@@ -89,7 +89,7 @@ export const UpcomingSection: React.FC<UpcomingSectionProps> = ({
           <div className="py-14 text-center text-sm text-[#7a8c6f]" role="status">Loading dates…</div>
         ) : loadError ? (
           <div className="py-12 px-6 text-center bg-white rounded-2xl border border-rose-200" role="alert">
-            <p className="font-serif text-2xl text-[#142A21]">Не удалось загрузить даты</p>
+            <p className="font-serif text-2xl text-[#142A21]">Could not load confirmed dates</p>
             <button onClick={onRetry} className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#B8C7AE] text-sm hover:bg-[#FAF8F2]">
               <RefreshCw className="w-4 h-4" /> Retry
             </button>
@@ -97,7 +97,7 @@ export const UpcomingSection: React.FC<UpcomingSectionProps> = ({
         ) : events.length === 0 ? (
           <div className="py-12 px-6 text-center bg-white rounded-2xl border border-[#B8C7AE]/30" role="status">
             <Calendar className="w-8 h-8 mx-auto text-[#7a8c6f] mb-3" />
-            <p className="font-serif text-2xl text-[#142A21]">Подтверждённых дат пока нет</p>
+            <p className="font-serif text-2xl text-[#142A21]">No confirmed dates yet</p>
           </div>
         ) : filteredEvents.length === 0 ? (
           <div className="py-12 text-center text-sm text-[#7a8c6f]">No confirmed dates match these filters.</div>
