@@ -33,6 +33,7 @@ export const GallerySection: React.FC = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <section id="gallery" className="py-16 sm:py-20 bg-[#F4F0E6] text-[#142A21] w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
@@ -45,6 +46,20 @@ export const GallerySection: React.FC = () => {
           <p className="text-center text-base text-[#7a8c6f]" role="status">The photo gallery could not be loaded.</p>
         ) : photos.length === 0 ? (
           <p className="text-center text-base text-[#7a8c6f]" role="status">Loading gallery…</p>
+=======
+    <section id="gallery" className="py-16 sm:py-20 bg-[#F4F0E6] text-[#142A21]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <span className="text-xs uppercase tracking-widest text-[#7a8c6f] font-semibold block mb-2">Moments</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight mb-4">Photo Gallery</h2>
+          <p className="text-sm text-[#142A21]/75 font-light leading-relaxed">Photographs from the Katin-awan community gallery.</p>
+        </div>
+
+        {loadError ? (
+          <p className="text-center text-sm text-[#7a8c6f]" role="status">The photo gallery could not be loaded.</p>
+        ) : photos.length === 0 ? (
+          <p className="text-center text-sm text-[#7a8c6f]" role="status">Loading gallery…</p>
+>>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
             {photos.map((photo, index) => (

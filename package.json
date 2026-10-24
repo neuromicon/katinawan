@@ -1,19 +1,31 @@
 {
+<<<<<<< HEAD
   "name": "react-example",
+=======
+  "name": "katinawan",
+>>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+<<<<<<< HEAD
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
+=======
+    "dev": "node scripts/generate-gallery-manifest.mjs && vite --port=3000 --host=0.0.0.0",
+    "build": "node scripts/generate-gallery-manifest.mjs && vite build",
+    "preview": "vite preview --host=0.0.0.0",
+    "clean": "node scripts/clean-output.mjs",
+>>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
     "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
+<<<<<<< HEAD
     "lucide-react": "^0.546.0",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
@@ -21,13 +33,27 @@
     "express": "^4.21.2",
     "dotenv": "^17.2.3",
     "motion": "^12.23.24"
+=======
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "firebase": "^13.1.0",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "vite": "^8.3.0"
+>>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.21",
+<<<<<<< HEAD
     "esbuild": "^0.25.0",
+=======
+    "esbuild": "^0.28.2",
+>>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
