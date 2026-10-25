@@ -6,8 +6,24 @@ import {
   parseManilaDatetime,
   toManilaISO,
   parseEventsFromCsvText,
+  normalizeSpreadsheetCsvUrl,
   MANILA_OFFSET_MINUTES
 } from './api';
+
+test('normalizeSpreadsheetCsvUrl converts pubhtml links to CSV export links', () => {
+  const pubhtmlUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTM7KHgJciAxleS4BlRW3wNaqo-Nd_a6m2cTrf5CA5FO_NpDrRW1FFxXmWFsl9eUN8ird4MU5-0IpF/pubhtml';
+  const expected = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTM7KHgJciAxleS4BlRW3wNaqo-Nd_a6m2cTrf5CA5FO_NpDrRW1FFxXmWFsl9eUN8ird4MU5-0IpF/pub?output=csv';
+  assert.equal(normalizeSpreadsheetCsvUrl(pubhtmlUrl), expected);
+
+  // With query parameter like ?gid=1923675221
+  const pubhtmlWithGid = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTM7KHgJciAxleS4BlRW3wNaqo-Nd_a6m2cTrf5CA5FO_NpDrRW1FFxXmWFsl9eUN8ird4MU5-0IpF/pubhtml?gid=1923675221';
+  const expectedWithGid = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTM7KHgJciAxleS4BlRW3wNaqo-Nd_a6m2cTrf5CA5FO_NpDrRW1FFxXmWFsl9eUN8ird4MU5-0IpF/pub?gid=1923675221&output=csv';
+  assert.equal(normalizeSpreadsheetCsvUrl(pubhtmlWithGid), expectedWithGid);
+
+  // Standard CSV URLs are unchanged
+  const standardCsv = 'https://docs.google.com/spreadsheets/d/1GJDa8kA5_JeCUkV9Dq9V1dcmqtR67lHgUAEWxgtZD7A/gviz/tq?tqx=out:csv&gid=1454969340';
+  assert.equal(normalizeSpreadsheetCsvUrl(standardCsv), standardCsv);
+});
 
 test('parseCsv handles simple and quoted fields', () => {
   const csv = 'Title,Date,"Description, with comma"\n"Healing, Ceremony",2026-11-20,"Deep ""inner"" journey"';

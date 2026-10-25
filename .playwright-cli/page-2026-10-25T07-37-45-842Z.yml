@@ -1,0 +1,407 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "Katin-awan home" [ref=e7] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: Katin‑awan
+            - generic [ref=e15]: Visayas
+          - generic [ref=e16]: Sacred Plant Spirit Healing
+      - navigation [ref=e17]:
+        - link "Ceremonies" [ref=e18] [cursor=pointer]:
+          - /url: "#ceremony"
+        - link "Upcoming" [ref=e19] [cursor=pointer]:
+          - /url: "#upcoming"
+        - link "Gallery" [ref=e20] [cursor=pointer]:
+          - /url: "#gallery"
+        - link "Preparation" [ref=e21] [cursor=pointer]:
+          - /url: "#preparation"
+        - link "FAQ" [ref=e22] [cursor=pointer]:
+          - /url: "#faq"
+        - link "Contact" [ref=e23] [cursor=pointer]:
+          - /url: "#contact"
+        - link "GitHub" [ref=e24] [cursor=pointer]:
+          - /url: https://github.com/neuromicon/katinawan
+        - button "Apply" [ref=e25]
+  - main [ref=e29]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: Katin-awan • Sacred Plant Spirit Healing
+      - heading "Sacred Ceremonies & Healing Experiences" [level=1] [ref=e37]
+      - paragraph [ref=e38]: A curated space for Velada vigils, Ayahuasca ceremonies, night gatherings, and private healing experiences — held in tranquil sanctuaries across the Philippines.
+      - generic [ref=e39]:
+        - text: "The Meaning of Katin-awan: In Cebuano,"
+        - emphasis [ref=e40]: katin-awan
+        - text: translates to “clarification,” “explanation,” or “enlightenment” (from the root
+        - emphasis [ref=e41]: tin-aw
+        - text: ", lucid and clear)."
+      - generic [ref=e42]:
+        - button "Upcoming Ceremonies" [ref=e43]
+        - button "Explore Our Ceremonies" [ref=e48]
+      - generic [ref=e52]:
+        - generic [ref=e53]: Individual Application Review
+        - generic [ref=e58]: Limited Capacity (10–12 seekers)
+        - generic [ref=e63]: Visayas Sanctuary, Philippines
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]: Our Ceremonies
+        - heading "Sacred Healing Experiences" [level=2] [ref=e72]
+        - paragraph [ref=e73]: Each ceremony is a distinct path — held within a consecrated, protected space where trained facilitators accompany you with music, grounding presence, and compassionate support.
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - heading "Velada — Sacred Mushroom Vigil" [level=3] [ref=e79]
+          - paragraph [ref=e80]: A guided nocturnal ceremony rooted in traditional Mazatecan practice. Consecrated sacred mushroom, blended with ceremonial cacao, is consumed within a protected space accompanied by sacred songs, grounding smudges, and compassionate facilitation throughout the night.
+        - generic [ref=e81]:
+          - heading "Ayahuasca Ceremony" [level=3] [ref=e86]
+          - paragraph [ref=e87]: A deep ceremonial journey with the sacred vine of the Amazon. Facilitated with reverence for indigenous tradition, each session is held in a small, intentional container with experienced guides providing unwavering support throughout the night.
+        - generic [ref=e88]:
+          - heading "Night Gatherings" [level=3] [ref=e92]
+          - paragraph [ref=e93]: Community-oriented ceremonial evenings blending breathwork, sacred plant teas, sound immersion, and guided meditation. Ideal for seekers exploring plant spirit healing for the first time in a gentle, supported setting.
+        - generic [ref=e94]:
+          - heading "Private Ceremonies" [level=3] [ref=e98]
+          - paragraph [ref=e99]: Personalized one-on-one or small-group sessions designed around your specific healing intentions. Conducted with full facilitator presence, these private containers offer depth, intimacy, and focused ceremonial support.
+      - generic [ref=e100]:
+        - heading "The Shamanic Thread of Katin-awan" [level=3] [ref=e105]
+        - paragraph [ref=e106]:
+          - text: In pre-colonial Philippines, spiritual harmony and healing were guided by
+          - emphasis [ref=e107]: Babaylan
+          - text: and
+          - emphasis [ref=e108]: Katalonan
+          - text: — guardians of herbal wisdom who communicated with nature spirits (
+          - emphasis [ref=e109]: diwata
+          - text: ) and ancestor spirits (
+          - emphasis [ref=e110]: anito
+          - text: ).
+        - paragraph [ref=e111]:
+          - text: In Visayas, when seekers seek profound answers, they ask for
+          - strong [ref=e112]: katin-awan
+          - text: — the lifting of cloudiness from the soul. We honor this sacred lineage by cultivating humility, deep respect for plant spirits, and communion with nature.
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]: The Journey
+          - heading "From Enquiry to Confirmation" [level=3] [ref=e116]
+          - paragraph [ref=e117]: We maintain a small, intentional container. Every seeker undergoes manual review.
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - generic [ref=e120]: "01"
+            - heading "Explore the Ceremonies" [level=4] [ref=e121]
+            - paragraph [ref=e122]: Read about each offering, the preparation guidelines, and FAQ to make an informed choice.
+          - generic [ref=e123]:
+            - generic [ref=e124]: "02"
+            - heading "Choose an Available Date" [level=4] [ref=e125]
+            - paragraph [ref=e126]: Review published gatherings and choose a date with open capacity.
+          - generic [ref=e127]:
+            - generic [ref=e128]: "03"
+            - heading "Submit Application" [level=4] [ref=e129]
+            - paragraph [ref=e130]: Fill out your contact details and personal intentions. No immediate payment.
+          - generic [ref=e131]:
+            - generic [ref=e132]: "04"
+            - heading "Manual Organizer Review" [level=4] [ref=e133]
+            - paragraph [ref=e134]: Applications are reviewed individually. Submitting does not guarantee a place.
+          - generic [ref=e135]:
+            - generic [ref=e136]: "05"
+            - heading "Deposit Instructions" [level=4] [ref=e137]
+            - paragraph [ref=e138]: If approved, you receive official deposit instructions and deadlines via email.
+          - generic [ref=e139]:
+            - generic [ref=e140]: "06"
+            - heading "Confirmed Reservation" [level=4] [ref=e141]
+            - paragraph [ref=e142]: Your place is locked once payment is manually verified. Directions are sent.
+      - generic [ref=e143]:
+        - heading "Important Health, Safety & Legal Notice" [level=3] [ref=e147]
+        - paragraph [ref=e148]: Sacred Plant Spirit Healing does not make medical treatment claims or promise guaranteed health outcomes. Ceremonial experiences incorporate traditional practices and should never be viewed as a substitute for professional medical, psychiatric, or psychological diagnosis and care.
+        - paragraph [ref=e149]: Participants must honestly disclose pre-existing health conditions, psychiatric histories, and active prescription medications during screening to ensure the physical and psychological safety of the container.
+      - generic [ref=e150]:
+        - button "Apply for a Ceremony" [ref=e151]
+        - button "Read Preparation Guide" [ref=e156]
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]: Calendar
+        - heading "Upcoming Ceremonies" [level=2] [ref=e165]
+        - paragraph [ref=e166]: All dates are confirmed by the organizer. Sorted chronologically, soonest first. Past events are removed automatically.
+      - generic [ref=e167]:
+        - generic [ref=e168]:
+          - generic [ref=e169]:
+            - generic [ref=e170]: Search ceremonies
+            - textbox "Search ceremonies" [ref=e174]:
+              - /placeholder: Search ceremonies or dates
+          - combobox [ref=e175]:
+            - option "All years" [selected]
+          - combobox [ref=e176]:
+            - option "All months" [selected]
+            - option "January"
+            - option "February"
+            - option "March"
+            - option "April"
+            - option "May"
+            - option "June"
+            - option "July"
+            - option "August"
+            - option "September"
+            - option "October"
+            - option "November"
+            - option "December"
+        - generic [ref=e177]: Loading…
+      - status [ref=e178]: Loading upcoming ceremonies…
+      - generic [ref=e179]:
+        - heading "Interested in Future Gatherings?" [level=3] [ref=e184]
+        - paragraph [ref=e185]: If current dates do not fit your schedule or you would like to be notified as soon as new ceremonies are published, join our interest list.
+        - link "Join the Interest List" [ref=e186] [cursor=pointer]:
+          - /url: https://forms.gle/cELnQqT2RctV6XPg9
+      - generic [ref=e192]: Only ceremonies explicitly confirmed by the organizer appear here. Submitting an application does not confirm a booking.
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - generic [ref=e196]: Moments
+        - heading "Photo Gallery" [level=2] [ref=e197]
+        - paragraph [ref=e198]: Photographs from the Katin-awan sanctuary. Click any photo to view in full resolution.
+      - status [ref=e199]: Loading gallery…
+    - generic [ref=e201]:
+      - generic [ref=e202]:
+        - generic [ref=e203]: Application
+        - heading "Apply for a Ceremony" [level=2] [ref=e204]
+        - paragraph [ref=e205]: Submit your application through the official Google Form. Each application is reviewed individually by the organizer. Submitting does not confirm a booking.
+      - generic [ref=e206]:
+        - generic [ref=e207]:
+          - generic [ref=e208]: Official Google Form
+          - link "Open form in a new tab" [ref=e213] [cursor=pointer]:
+            - /url: https://docs.google.com/forms/d/1JbFiJJcT9n3e9k31qQzZq4SAbPzsE79jeRepDu70Ras/viewform
+        - iframe [ref=e220]: Loading Google Form…
+        - generic [ref=e221]:
+          - text: Read the
+          - button "Privacy Policy" [ref=e225]
+          - text: before submitting personal information.
+    - generic [ref=e227]:
+      - generic [ref=e228]:
+        - generic [ref=e229]: Preparation Guide
+        - heading "Prepare with Reverence & Care" [level=2] [ref=e230]
+        - paragraph [ref=e231]:
+          - text: Following
+          - emphasis [ref=e232]: “la dieta”
+          - text: (the sacred diet) opens energetic channels, purifies the vessel, and allows the plant spirits to guide you deeper with clarity and grace.
+      - generic [ref=e233]:
+        - generic [ref=e234]:
+          - generic [ref=e238]:
+            - heading "The Dieta Timeline" [level=3] [ref=e239]
+            - text: Cleansing your mind, body and vessel
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - generic [ref=e242]: Phase 1 • Starting Monday
+              - generic [ref=e243]: 5 days prior
+            - list [ref=e244]:
+              - listitem [ref=e245]:
+                - generic [ref=e247]:
+                  - strong [ref=e248]: "Avoid Alcohol:"
+                  - text: Alters liver metabolism and creates vibrational friction, making it difficult for sacred medicines to penetrate.
+              - listitem [ref=e249]:
+                - generic [ref=e251]:
+                  - strong [ref=e252]: "Eliminate Red Meat & Pork:"
+                  - text: Takes days to digest and carries dense energetic signatures. Transition to light plant-based meals.
+              - listitem [ref=e253]:
+                - generic [ref=e255]:
+                  - strong [ref=e256]: "Minimize Refined Sugars & Processed Foods:"
+                  - text: Keeps your gut microbiome calm and prevents sudden blood glucose spikes.
+          - generic [ref=e257]:
+            - generic [ref=e258]:
+              - generic [ref=e259]: Phase 2 • Starting Wednesday
+              - generic [ref=e260]: 3 days prior
+            - list [ref=e261]:
+              - listitem [ref=e262]:
+                - generic [ref=e264]:
+                  - strong [ref=e265]: "Sexual Energy Retention:"
+                  - text: Abstain from sexual activity and self-pleasure to preserve your vital life force (
+                  - emphasis [ref=e266]: ojas/prana
+                  - text: ).
+              - listitem [ref=e267]:
+                - generic [ref=e269]:
+                  - strong [ref=e270]: "Cut Spicy Foods, Excessive Salt & Oils:"
+                  - text: Protects digestive linings against purging irritation during nighttime vigil.
+              - listitem [ref=e271]:
+                - generic [ref=e273]:
+                  - strong [ref=e274]: "Reduce Screen Time & Violent Media:"
+                  - text: Cultivate quiet stillness. Begin journaling your questions and intentions.
+          - generic [ref=e275]:
+            - generic [ref=e276]:
+              - generic [ref=e277]: Phase 3 • Gathering Day
+              - generic [ref=e278]: Day of vigil
+            - list [ref=e279]:
+              - listitem [ref=e280]:
+                - generic [ref=e282]:
+                  - strong [ref=e283]: "Fasting Window:"
+                  - text: Light fruit or porridge breakfast. Fast completely from 1:00 PM onwards. Water and herbal tea are permitted until 2 hours prior.
+              - listitem [ref=e284]:
+                - generic [ref=e286]:
+                  - strong [ref=e287]: "No Recreational Substances:"
+                  - text: Absolutely zero cannabis, recreational drugs, or stimulant supplements.
+        - generic [ref=e288]:
+          - generic [ref=e289]:
+            - generic [ref=e294]:
+              - heading "Packing Checklist" [level=3] [ref=e295]
+              - text: What to bring to the sanctuary
+            - generic [ref=e296]: 0 / 8 Packed
+          - generic [ref=e297]:
+            - button "Comfortable, loose-fitting clothes (white or earthy tones recommended)Essential" [ref=e298]
+            - button "Change of clothes for 2 full daysEssential" [ref=e303]
+            - button "Warm socks for night relaxation in the templeEssential" [ref=e308]
+            - button "Reusable water bottle (drinking water provided)Essential" [ref=e313]
+            - button "Personal cozy blanket or shawlEssential" [ref=e318]
+            - button "Journal and pen for morning insights and reflections" [ref=e323]
+            - button "Personal organic toiletries & small towel" [ref=e328]
+            - button "Written intentions and questions for the divine" [ref=e333]
+          - generic [ref=e338]:
+            - generic [ref=e339]: "Sanctuary Comfort:"
+            - text: We have no strict uniform rules—wear whatever allows you to sit, lie down, and breathe without restriction. Earth tones, soft linens, and loose whites are favored.
+      - generic [ref=e340]:
+        - generic [ref=e345]:
+          - heading "Example Weekend Schedule" [level=3] [ref=e346]
+          - paragraph [ref=e347]: Subject to natural unfolding and container rhythm. Confirmed details sent per gathering.
+        - generic [ref=e348]:
+          - generic [ref=e349]:
+            - generic [ref=e350]: 15:00
+            - heading "Arrival & Settling In" [level=4] [ref=e351]
+            - paragraph [ref=e352]: Welcome tea, room assignment, unwinding and orientation with the grounds.
+          - generic [ref=e353]:
+            - generic [ref=e354]: 16:30
+            - heading "Discussion & Introduction" [level=4] [ref=e355]
+            - paragraph [ref=e356]: Opening circle, community agreements, overview of the night and intentions.
+          - generic [ref=e357]:
+            - generic [ref=e358]: 17:00
+            - heading "Rapé & Sanangga Clearing" [level=4] [ref=e359]
+            - paragraph [ref=e360]: Optional sacred Amazonian plant medicines for mental centering and sensory clarity.
+          - generic [ref=e361]:
+            - generic [ref=e362]: 18:00
+            - heading "Velada Full-Dose Ceremony" [level=4] [ref=e363]
+            - paragraph [ref=e364]: The sacred nocturnal vigil begins with ceremonial cacao and consecrated mushroom.
+          - generic [ref=e365]:
+            - generic [ref=e366]: 00:00
+            - heading "Light Meal & Rest" [level=4] [ref=e367]
+            - paragraph [ref=e368]: Warm nourishing broth, fruits, quiet integration, and peaceful sleep.
+          - generic [ref=e369]:
+            - generic [ref=e370]: 08:00
+            - heading "Morning Breakfast" [level=4] [ref=e371]
+            - paragraph [ref=e372]: Fresh local tropical fruit, herbal teas, and restorative breakfast.
+          - generic [ref=e373]:
+            - generic [ref=e374]: 09:00
+            - heading "Group Sharing & Integration" [level=4] [ref=e375]
+            - paragraph [ref=e376]: Reflective circle sharing insights, lessons, and symbolic interpretations.
+          - generic [ref=e377]:
+            - generic [ref=e378]: 10:00
+            - heading "Velada Low-Dose Harmony Session" [level=4] [ref=e379]
+            - paragraph [ref=e380]: Gentle micro-ceremony for anchoring the healing and emotional grounding.
+          - generic [ref=e381]:
+            - generic [ref=e382]: 12:00
+            - heading "Communal Lunch & Closing" [level=4] [ref=e383]
+            - paragraph [ref=e384]: Closing blessings, final goodbyes, and departure with open hearts.
+    - generic [ref=e386]:
+      - generic [ref=e387]:
+        - generic [ref=e388]: Frequently Asked Questions
+        - heading "Clarity & Common Questions" [level=2] [ref=e389]
+        - paragraph [ref=e390]: Everything you need to know about the Velada vigil, safety rules, container etiquette, and booking procedures.
+      - generic [ref=e391]:
+        - textbox "Search questions (e.g. Velada, safety, diet, booking)..." [ref=e393]
+        - generic [ref=e394]:
+          - button "All" [ref=e395]
+          - button "Ceremony & Origins" [ref=e396]
+          - button "Experience & Flow" [ref=e397]
+          - button "Preparation & Safety" [ref=e398]
+          - button "Booking & Logistics" [ref=e399]
+      - generic [ref=e400]:
+        - generic [ref=e401]:
+          - button "What does the word \"Velada\" mean?" [expanded] [ref=e402]
+          - generic [ref=e406]:
+            - paragraph [ref=e407]: Velada is a Spanish word that means a gathering at night or a vigil. In this ceremonial context, it refers to a sacred overnight communion informed by traditional Mazatecan practice.
+            - generic [ref=e408]: Ceremony & Origins
+        - generic [ref=e409]:
+          - button "What is the meaning behind the name \"Katin-awan\"?" [expanded] [ref=e410]
+          - generic [ref=e414]:
+            - paragraph [ref=e415]: In Cebuano (Visayan), "katin-awan" translates to "explanation," "clarification," or "enlightenment" (from the root "tin-aw," meaning clear or lucid). It represents the clarity of mind, heart, and spirit that seekers ask for when navigating life's crossroads.
+            - generic [ref=e416]: Ceremony & Origins
+        - button "How is the Velada ceremony conducted?" [ref=e418]
+        - button "What can participants expect during the experience?" [ref=e423]
+        - button "What is the difference between recreational and ceremonial use?" [ref=e428]
+        - button "How long does the ceremony last?" [ref=e433]
+        - button "Is it suitable for beginners?" [ref=e438]
+        - button "How should I prepare beforehand (La Dieta)?" [ref=e443]
+        - button "Does the ceremony treat medical or psychiatric conditions?" [ref=e448]
+        - button "Is this aligned with or against any religion?" [ref=e453]
+        - button "Is my place confirmed immediately upon submitting an application?" [ref=e458]
+        - button "How do deposits and payments work?" [ref=e463]
+        - button "What happens if a ceremony is fully booked?" [ref=e468]
+        - button "Where is the ceremony located?" [ref=e473]
+      - generic [ref=e477]:
+        - generic [ref=e478]:
+          - heading "Still have unaddressed questions?" [level=4] [ref=e479]
+          - paragraph [ref=e480]: We welcome thoughtful enquiries about physical eligibility, container guidelines, or transport.
+        - link "Ask the Organizer" [ref=e481] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e486]:
+      - generic [ref=e487]:
+        - generic [ref=e488]: Connect
+        - heading "Contact the Organizer" [level=2] [ref=e489]
+        - paragraph [ref=e490]: For questions about confirmed dates, preparation, or travel arrangements, contact the organizer directly.
+      - generic [ref=e491]:
+        - generic [ref=e492]:
+          - generic [ref=e498]:
+            - generic [ref=e499]: Email
+            - text: For detailed questions and logistics.
+          - link "Email Organizer" [ref=e500] [cursor=pointer]:
+            - /url: mailto:katinawanph@gmail.com
+        - generic [ref=e504]:
+          - generic [ref=e509]:
+            - generic [ref=e510]: Messenger
+            - text: For quick questions to the organizers.
+          - link "Open Messenger" [ref=e511] [cursor=pointer]:
+            - /url: https://www.messenger.com/t/109269153922979
+          - link "Visit Facebook Page" [ref=e514] [cursor=pointer]:
+            - /url: https://web.facebook.com/sacredplantspirithealing
+        - generic [ref=e525]:
+          - generic [ref=e526]: Sanctuary Location
+          - paragraph [ref=e527]: Visayas Island Region, Philippines
+          - paragraph [ref=e528]: Exact directions are shared privately by the organizer with confirmed participants.
+  - contentinfo [ref=e529]:
+    - generic [ref=e530]:
+      - generic [ref=e531]:
+        - generic [ref=e532]:
+          - generic [ref=e533]: Katin-awan
+          - paragraph [ref=e539]: A ceremonial space for reflection, connection, and reverence in the Visayas, Philippines.
+          - paragraph [ref=e540]: "Sanctuary: private location in the Visayas Region, Philippines."
+        - generic [ref=e541]:
+          - heading "Explore" [level=4] [ref=e542]
+          - list [ref=e543]:
+            - listitem [ref=e544]:
+              - link "The Ceremony" [ref=e545] [cursor=pointer]:
+                - /url: "#ceremony"
+            - listitem [ref=e546]:
+              - link "Confirmed Dates" [ref=e547] [cursor=pointer]:
+                - /url: "#upcoming"
+            - listitem [ref=e548]:
+              - link "Photo Gallery" [ref=e549] [cursor=pointer]:
+                - /url: "#gallery"
+            - listitem [ref=e550]:
+              - link "Preparation Guide" [ref=e551] [cursor=pointer]:
+                - /url: "#preparation"
+            - listitem [ref=e552]:
+              - link "Frequently Asked Questions" [ref=e553] [cursor=pointer]:
+                - /url: "#faq"
+            - listitem [ref=e554]:
+              - link "Contact the Organizer" [ref=e555] [cursor=pointer]:
+                - /url: "#contact"
+        - generic [ref=e556]:
+          - heading "Policies" [level=4] [ref=e557]
+          - list [ref=e558]:
+            - listitem [ref=e559]:
+              - button "Privacy Policy" [ref=e560]
+            - listitem [ref=e561]:
+              - button "Terms & Conditions" [ref=e562]
+            - listitem [ref=e563]:
+              - link "GitHub Repository" [ref=e564] [cursor=pointer]:
+                - /url: https://github.com/neuromicon/katinawan
+      - generic [ref=e565]:
+        - paragraph [ref=e566]: Only dates explicitly published by the organizer are listed. Submitting an application does not confirm a booking.
+        - paragraph [ref=e567]: © 2026 Katin-awan — Sacred Plant Spirit Healing. All rights reserved.
+  - generic [ref=e568]:
+    - button "Start audio" [ref=e569]
+    - button "Mute audio" [ref=e572]
+    - generic [ref=e577] [cursor=pointer]:
+      - generic [ref=e578]: Audio volume
+      - slider "Audio volume" [ref=e579]: "20"
+      - generic [ref=e580]: 20%
+    - generic [ref=e581]: Welcome

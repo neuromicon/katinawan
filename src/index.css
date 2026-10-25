@@ -16,7 +16,6 @@
 
   html {
     scroll-behavior: smooth;
-<<<<<<< HEAD
     font-size: 19px;
     line-height: 1.65;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -27,11 +26,6 @@
     html {
       font-size: 17px;
     }
-=======
-    font-size: 17px;
-    line-height: 1.65;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   }
 
   body {

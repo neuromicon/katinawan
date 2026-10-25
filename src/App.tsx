@@ -50,17 +50,10 @@ export default function App() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen flex flex-col bg-[#F4F0E6] text-[#142A21] selection:bg-[#C4A46A]/30 overflow-x-hidden">
       <Navbar onSelectApply={() => scrollToSection('apply')} />
 
       <main className="flex-1 w-full overflow-x-hidden">
-=======
-    <div className="min-h-screen flex flex-col bg-[#F4F0E6] text-[#142A21] selection:bg-[#C4A46A]/30">
-      <Navbar onSelectApply={() => scrollToSection('apply')} />
-
-      <main className="flex-1">
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
         <Hero
           onExploreUpcoming={() => scrollToSection('upcoming')}
           onLearnCeremonies={() => scrollToSection('ceremony')}

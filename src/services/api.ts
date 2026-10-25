@@ -1,22 +1,33 @@
 import type { CeremonyEvent } from '../types';
 
-<<<<<<< HEAD
 // Asia/Manila is UTC+8 with no DST
 export const MANILA_OFFSET_MINUTES = 8 * 60;
 
+export const DEFAULT_EVENTS_CSV_URL =
+  'https://docs.google.com/spreadsheets/d/1GJDa8kA5_JeCUkV9Dq9V1dcmqtR67lHgUAEWxgtZD7A/gviz/tq?tqx=out:csv&gid=1454969340';
+
+/**
+ * Normalizes Google Sheets URLs so that if a user pastes a "/pubhtml" link,
+ * it is automatically converted into the live CSV export endpoint.
+ */
+export function normalizeSpreadsheetCsvUrl(rawUrl: string): string {
+  const trimmed = (rawUrl || '').trim();
+  if (!trimmed) return '';
+
+  if (trimmed.includes('/pubhtml')) {
+    const queryIndex = trimmed.indexOf('?');
+    if (queryIndex !== -1) {
+      const base = trimmed.slice(0, queryIndex).replace(/\/pubhtml$/, '/pub');
+      const query = trimmed.slice(queryIndex + 1);
+      return `${base}?${query}&output=csv`;
+    }
+    return trimmed.replace(/\/pubhtml$/, '/pub?output=csv');
+  }
+
+  return trimmed;
+}
+
 export function parseCsv(csv: string): string[][] {
-=======
-// gid=1923675221 is the published Events tab
-const DEFAULT_EVENTS_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/1GJDa8kA5_JeCUkV9Dq9V1dcmqtR67lHgUAEWxgtZD7A/gviz/tq?tqx=out:csv&gid=1923675221';
-
-const EVENTS_CSV_URL = import.meta.env.VITE_EVENTS_CSV_URL || DEFAULT_EVENTS_CSV_URL;
-
-// Asia/Manila is UTC+8 with no DST
-const MANILA_OFFSET_MINUTES = 8 * 60;
-
-function parseCsv(csv: string): string[][] {
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const rows: string[][] = [];
   let row: string[] = [];
   let field = '';
@@ -61,19 +72,11 @@ function parseCsv(csv: string): string[][] {
   return rows;
 }
 
-<<<<<<< HEAD
 export function normalizeHeader(value: string): string {
   return value.replace(/^\uFEFF/, '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 export function numberOrZero(value: string | undefined): number {
-=======
-function normalizeHeader(value: string): string {
-  return value.replace(/^\uFEFF/, '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function numberOrZero(value: string | undefined): number {
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   if (!value) return 0;
   const normalized = value.replace(/,/g, '').trim();
   if (!/^-?(?:\d+\.?\d*|\.\d+)$/.test(normalized)) return 0;
@@ -86,24 +89,15 @@ function numberOrZero(value: string | undefined): number {
  * (H:MM:SS AM/PM or HH:MM) as Asia/Manila local time, returning a UTC Date.
  * Returns null if the input is missing or cannot be parsed.
  */
-<<<<<<< HEAD
 export function parseManilaDatetime(dateStr: string, timeStr: string): Date | null {
   if (!dateStr || !dateStr.trim()) return null;
-=======
-function parseManilaDatetime(dateStr: string, timeStr: string): Date | null {
-  if (!dateStr.trim()) return null;
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
 
   // Strip any embedded time from the date string (e.g. ISO with T)
   const cleanDate = dateStr.split('T')[0].trim();
 
-<<<<<<< HEAD
   let year: number;
   let month: number;
   let day: number;
-=======
-  let year: number, month: number, day: number;
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
 
   const mdy = cleanDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   const ymd = cleanDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -124,13 +118,9 @@ function parseManilaDatetime(dateStr: string, timeStr: string): Date | null {
 
   if (!year || !month || !day) return null;
 
-<<<<<<< HEAD
   let hours = 0;
   let minutes = 0;
   let seconds = 0;
-=======
-  let hours = 0, minutes = 0, seconds = 0;
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const t = (timeStr ?? '').trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i);
   if (t) {
     hours   = Number(t[1]);
@@ -141,11 +131,7 @@ function parseManilaDatetime(dateStr: string, timeStr: string): Date | null {
     if (mer === 'AM' && hours === 12) hours = 0;
   }
 
-<<<<<<< HEAD
   // Manila local → UTC: subtract Manila offset (UTC+8)
-=======
-  // Manila local → UTC: subtract Manila offset
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const utcMs = Date.UTC(year, month - 1, day, hours, minutes, seconds)
     - MANILA_OFFSET_MINUTES * 60_000;
   const date = new Date(utcMs);
@@ -153,11 +139,7 @@ function parseManilaDatetime(dateStr: string, timeStr: string): Date | null {
 }
 
 /** Convert a UTC Date to an ISO-8601 string with +08:00 suffix. */
-<<<<<<< HEAD
 export function toManilaISO(date: Date): string {
-=======
-function toManilaISO(date: Date): string {
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const ms = date.getTime() + MANILA_OFFSET_MINUTES * 60_000;
   const d  = new Date(ms);
   const p  = (n: number, w = 2) => String(n).padStart(w, '0');
@@ -168,11 +150,7 @@ function toManilaISO(date: Date): string {
 }
 
 /** Generate a stable slug-like ID from title and date string. */
-<<<<<<< HEAD
 export function generateEventId(title: string, dateStr: string): string {
-=======
-function generateEventId(title: string, dateStr: string): string {
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const datePart  = dateStr.replace(/[^0-9]/g, '').slice(0, 8);
   const titlePart = title
     .toLowerCase()
@@ -182,36 +160,16 @@ function generateEventId(title: string, dateStr: string): string {
   return `${titlePart || 'event'}-${datePart}`;
 }
 
-<<<<<<< HEAD
 export function parseEventsFromCsvText(csvText: string, nowUtc = Date.now()): CeremonyEvent[] {
   const records = parseCsv(csvText);
   if (records.length === 0) throw new Error('Events CSV returned no rows.');
 
   const headers = records[0].map(normalizeHeader);
-=======
-export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
-  const response = await fetch(EVENTS_CSV_URL, { cache: 'no-store' });
-  if (!response.ok) {
-    throw new Error(`Events CSV request failed (HTTP ${response.status}).`);
-  }
-
-  const records = parseCsv(await response.text());
-  if (records.length === 0) throw new Error('Events CSV returned no rows.');
-
-  const headers     = records[0].map(normalizeHeader);
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   const columnIndex = new Map<string, number>(
     headers.map((h, i): [string, number] => [h, i])
   );
 
-<<<<<<< HEAD
   return records.slice(1).flatMap<CeremonyEvent>((row): CeremonyEvent[] => {
-=======
-  // Current time in UTC — used to filter out past events
-  const nowUtc = Date.now();
-
-  const events = records.slice(1).flatMap<CeremonyEvent>((row): CeremonyEvent[] => {
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
     const value = (aliases: string[]): string => {
       for (const alias of aliases) {
         const idx = columnIndex.get(normalizeHeader(alias));
@@ -221,15 +179,9 @@ export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
       return '';
     };
 
-<<<<<<< HEAD
     // Strict filter: only rows where Published column is strictly TRUE (case-insensitive) are accepted
     const pub = value(['Published', 'published']).trim().toUpperCase();
     if (pub !== 'TRUE') return [];
-=======
-    // If a Published column exists and is explicitly FALSE, skip
-    const pub = value(['Published']);
-    if (pub && pub.toUpperCase() === 'FALSE') return [];
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
 
     const title   = value(['Event Title', 'title', 'event_title', 'event name', 'name']);
     const dateStr = value(['Starts_at', 'starts_at', 'Event Date', 'start date', 'starts at', 'date']);
@@ -273,7 +225,6 @@ export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
       location_label:      value(['Location / Venue', 'location_label', 'location', 'venue']),
       location_visibility: locVis === 'PUBLIC' ? 'PUBLIC' : 'PRIVATE',
     }];
-<<<<<<< HEAD
   }).sort((a, b) => Date.parse(a.starts_at) - Date.parse(b.starts_at));
 }
 
@@ -313,16 +264,9 @@ async function fetchFromAppsScript(url: string): Promise<CeremonyEvent[]> {
 }
 
 export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
-  const csvUrl = (import.meta.env.VITE_EVENTS_CSV_URL || '').trim();
+  const configuredUrl = (import.meta.env.VITE_EVENTS_CSV_URL || DEFAULT_EVENTS_CSV_URL).trim();
+  const csvUrl = normalizeSpreadsheetCsvUrl(configuredUrl) || DEFAULT_EVENTS_CSV_URL;
   const appsScriptUrl = (import.meta.env.VITE_APPS_SCRIPT_URL || '').trim();
-
-  // Strict check: VITE_EVENTS_CSV_URL is required; no hardcoded Google Sheets URL fallback!
-  if (!csvUrl) {
-    if (appsScriptUrl) {
-      return fetchFromAppsScript(appsScriptUrl);
-    }
-    throw new Error('VITE_EVENTS_CSV_URL environment variable is required but missing or empty.');
-  }
 
   try {
     return await fetchFromCsv(csvUrl);
@@ -338,10 +282,4 @@ export async function fetchPublishedEvents(): Promise<CeremonyEvent[]> {
     }
     throw csvError;
   }
-=======
-  });
-
-  // Chronological order, soonest first
-  return events.sort((a, b) => Date.parse(a.starts_at) - Date.parse(b.starts_at));
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
 }

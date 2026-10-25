@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "",
   "description": "",
-=======
-  "name": "Katin-awan — Sacred Plant Spirit Healing",
-  "description": "Ceremonial space for reflection, connection and discovery in the Philippines. Browse upcoming gatherings, review preparation guidelines, and submit applications.",
->>>>>>> f1dd62eb3d4bd271f118a3d97350fa7ef4c207e8
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
